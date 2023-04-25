@@ -48,7 +48,9 @@
     "build:cjs": "yarn run babel src --out-dir dist/commonjs",
     "build:es": "BABEL_ENV=jsnext yarn run babel src --out-dir dist/es",
     "build:rollup": "yarn run rollup -c && rollup -c --compact",
-    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:rollup && npm run copy"
+    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:rollup && npm run copy",
+    "version-package": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "author": "Michael Overmeyer <michael.overmeyer@shopify.com>",
   "contributors": [],
