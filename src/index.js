@@ -30,7 +30,9 @@ class ShopifyFormat {
   // Implement custom interpolation logic
   // While i18next and Shopify's format both use the mustache syntax for interpolation,
   // Shopify uses the `ordinal` interpolation for ordinal pluralization, while i18next uses `count`.
-  parse(res, options, lng, ns, key) {
+  parse(res, options, lng, ns, key, info) {
+    const hadSuccessfulLookup = info && info.resolved && info.resolved.res;
+
     // Interpolations
     const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
     const matches = res.match(MUSTACHE_FORMAT);
