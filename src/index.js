@@ -26,7 +26,27 @@ class ShopifyFormat {
   // i18next is roughly a superset of Shopify's format.
   // TODO: Implement this to make sure that we enforce just the subset
   // TODO: Implement this to make ordinal pluralization work
-  // parse(res, options, lng, ns, key) {}
+
+  // Implement custom interpolation logic
+  // While i18next and Shopify's format both use the mustache syntax for interpolation,
+  // Shopify uses the `ordinal` interpolation for ordinal pluralization, while i18next uses `count`.
+  parse(res, options, lng, ns, key) {
+    // Interpolations
+    const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
+    const matches = res.match(MUSTACHE_FORMAT);
+    if (!matches) return res;
+    matches.forEach((match) => {
+      const interpolation_key = match.replace(MUSTACHE_FORMAT, "$1");
+      const value =
+        interpolation_key === "ordinal"
+          ? options["count"] || options["ordinal"]
+          : options[interpolation_key];
+      if (value !== undefined) {
+        res = res.replace(match, value);
+      }
+    });
+    return res;
+  }
 
   // Add any other locations that should be searched first for an answer to the lookup
   // Add keys to `finalKeys` in reverse order (e.g., least specific -> most specific)

@@ -150,7 +150,10 @@ describe("shopify format", () => {
             // TODO: Remove the "translation" namespace
             translation: {
               string: "Hello world!",
-              string_with_interpolation: "Hello {{casual_name}}!",
+              string_with_interpolation:
+                "Hello {{casual_name}}! Today is {{date}}.",
+              string_with_repeated_interpolation:
+                "Hello {{casual_name}}! Hello {{casual_name}}!",
               cardinal_pluralization: {
                 0: "I have no cars.",
                 one: "I have {{count}} car.",
@@ -158,6 +161,14 @@ describe("shopify format", () => {
               },
               cardinal_pluralization_with_missing_keys: {
                 other: "I have {{count}} cars.",
+              },
+              ordinal_pluralization: {
+                ordinal: {
+                  one: "This is my {{ordinal}}st car",
+                  two: "This is my {{ordinal}}nd car",
+                  few: "This is my {{ordinal}}rd car",
+                  other: "This is my {{ordinal}}th car",
+                },
               },
             },
           },
@@ -168,8 +179,16 @@ describe("shopify format", () => {
     it("should parse", () => {
       expect(i18next.t("string")).toEqual("Hello world!");
       expect(
-        i18next.t("string_with_interpolation", { casual_name: "Joe" })
-      ).toEqual("Hello Joe!");
+        i18next.t("string_with_interpolation", {
+          casual_name: "Joe",
+          date: "Monday",
+        })
+      ).toEqual("Hello Joe! Today is Monday.");
+      expect(
+        i18next.t("string_with_repeated_interpolation", {
+          casual_name: "Joe",
+        })
+      ).toEqual("Hello Joe! Hello Joe!");
       expect(i18next.t("cardinal_pluralization.0", { count: 0 })).toEqual(
         "I have no cars."
       );
@@ -185,6 +204,30 @@ describe("shopify format", () => {
       expect(
         i18next.t("cardinal_pluralization_with_missing_keys", { count: 1 })
       ).toEqual("I have 1 cars.");
+      expect(
+        i18next.t("ordinal_pluralization", { count: 1, ordinal: true })
+      ).toEqual("This is my 1st car");
+      expect(
+        i18next.t("ordinal_pluralization", { count: 2, ordinal: true })
+      ).toEqual("This is my 2nd car");
+      expect(
+        i18next.t("ordinal_pluralization", { count: 3, ordinal: true })
+      ).toEqual("This is my 3rd car");
+      expect(
+        i18next.t("ordinal_pluralization", { count: 4, ordinal: true })
+      ).toEqual("This is my 4th car");
+      expect(i18next.t("ordinal_pluralization", { ordinal: 1 })).toEqual(
+        "This is my 1st car"
+      );
+      expect(i18next.t("ordinal_pluralization", { ordinal: 2 })).toEqual(
+        "This is my 2nd car"
+      );
+      expect(i18next.t("ordinal_pluralization", { ordinal: 3 })).toEqual(
+        "This is my 3rd car"
+      );
+      expect(i18next.t("ordinal_pluralization", { ordinal: 4 })).toEqual(
+        "This is my 4th car"
+      );
     });
   });
 });
