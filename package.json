@@ -42,6 +42,7 @@
   },
   "scripts": {
     "test": "tsc --noEmit && jest --coverage --runInBand --ci",
+    "type-check": "tsc --build",
     "tdd": "jest --watch",
     "clean": "rimraf dist && mkdirp dist && rimraf locale-data",
     "copy": "cp ./dist/umd/i18nextShopify.min.js ./i18nextShopify.min.js && cp ./dist/umd/i18nextShopify.js ./i18nextShopify.js",
