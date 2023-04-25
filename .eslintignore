@@ -1,0 +1,6 @@
+.dev/*
+.github/*
+.shadowenv.d/*
+**/*.min.*
+**/dist/*
+**/node_modules/*

@@ -1,0 +1,15 @@
+.dev
+.DS_Store
+.idea
+.monitor
+.settings.xml
+.shadowenv.d
+*.dat
+*.orig
+*.swp
+*~
+coverage
+dist
+node_modules
+npm-debug.log
+npm-debug.log.*
