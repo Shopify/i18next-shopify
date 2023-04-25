@@ -147,6 +147,7 @@ describe("shopify format", () => {
         lng: "en",
         resources: {
           en: {
+            // TODO: Remove the "translation" namespace
             translation: {
               string: "Hello world!",
               string_with_interpolation: "Hello {{casual_name}}!",
