@@ -1,0 +1,45 @@
+{
+  "name": "i18next-shopify",
+  "version": "0.0.1",
+  "description": "i18nFormat plugin to use Shopify's translation format with i18next",
+  "main": "./index.js",
+  "module": "dist/es/index.js",
+  "keywords": [
+    "i18next",
+    "i18next-format"
+  ],
+  "homepage": "https://github.com/Shopify/i18next-shopify",
+  "bugs": "https://github.com/Shopify/i18next-shopify/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shopify/i18next-shopify"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@shopify/eslint-plugin": "^42.0.1",
+    "@shopify/stylelint-plugin": "^11.0.0",
+    "eslint": "8.38.0",
+    "i18next": "^22.4.15",
+    "intl": "1.2.5",
+    "intl-locales-supported": "^1.8.12",
+    "jest": "^27.5.1",
+    "jest-preset-stylelint": "^5.0.3",
+    "mkdirp": "0.5.1",
+    "react": "17.0.1",
+    "rimraf": "2.5.4",
+    "stylelint": "^14.15.0",
+    "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "test": "tsc --noEmit && jest --coverage --runInBand --ci",
+    "tdd": "jest --watch",
+    "clean": "rimraf dist && mkdirp dist && rimraf locale-data",
+    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:rollup && npm run copy"
+  },
+  "author": "Michael Overmeyer <michael.overmeyer@shopify.com>",
+  "contributors": [],
+  "license": "MIT",
+  "lock": false
+}
