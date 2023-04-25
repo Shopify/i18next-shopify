@@ -147,28 +147,25 @@ describe("shopify format", () => {
         lng: "en",
         resources: {
           en: {
-            // TODO: Remove the "translation" namespace
-            translation: {
-              string: "Hello world!",
-              string_with_interpolation:
-                "Hello {{casual_name}}! Today is {{date}}.",
-              string_with_repeated_interpolation:
-                "Hello {{casual_name}}! Hello {{casual_name}}!",
-              cardinal_pluralization: {
-                0: "I have no cars.",
-                one: "I have {{count}} car.",
-                other: "I have {{count}} cars.",
-              },
-              cardinal_pluralization_with_missing_keys: {
-                other: "I have {{count}} cars.",
-              },
-              ordinal_pluralization: {
-                ordinal: {
-                  one: "This is my {{ordinal}}st car",
-                  two: "This is my {{ordinal}}nd car",
-                  few: "This is my {{ordinal}}rd car",
-                  other: "This is my {{ordinal}}th car",
-                },
+            string: "Hello world!",
+            string_with_interpolation:
+              "Hello {{casual_name}}! Today is {{date}}.",
+            string_with_repeated_interpolation:
+              "Hello {{casual_name}}! Hello {{casual_name}}!",
+            cardinal_pluralization: {
+              0: "I have no cars.",
+              one: "I have {{count}} car.",
+              other: "I have {{count}} cars.",
+            },
+            cardinal_pluralization_with_missing_keys: {
+              other: "I have {{count}} cars.",
+            },
+            ordinal_pluralization: {
+              ordinal: {
+                one: "This is my {{ordinal}}st car",
+                two: "This is my {{ordinal}}nd car",
+                few: "This is my {{ordinal}}rd car",
+                other: "This is my {{ordinal}}th car",
               },
             },
           },

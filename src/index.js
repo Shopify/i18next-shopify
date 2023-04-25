@@ -111,6 +111,43 @@ class ShopifyFormat {
 
     return finalKeys;
   }
+
+  getResource(lng, _ns, key, options) {
+    // This is a copy of
+    // https://github.com/i18next/i18next/blob/ac4b6701c3ce9596e4eb88f5d774ca66f05d71fb/src/ResourceStore.js#L34-L56
+    // except we ignore the namespace, since Shopify's format doesn't have namespaces.
+    const keySeparator =
+      options.keySeparator !== undefined
+        ? options.keySeparator
+        : this.i18next.translator.resourceStore.options.keySeparator;
+
+    const ignoreJSONStructure =
+      options.ignoreJSONStructure !== undefined
+        ? options.ignoreJSONStructure
+        : this.i18next.translator.resourceStore.options.ignoreJSONStructure;
+
+    let path = [lng];
+    if (key && typeof key !== "string") path = path.concat(key);
+    if (key && typeof key === "string")
+      path = path.concat(keySeparator ? key.split(keySeparator) : key);
+
+    if (lng.indexOf(".") > -1) {
+      path = lng.split(".");
+    }
+
+    const result = utils.getPath(
+      this.i18next.translator.resourceStore.data,
+      path
+    );
+    if (result || !ignoreJSONStructure || typeof key !== "string")
+      return result;
+
+    return utils.deepFind(
+      this.i18next.translator.resourceStore.data[lng],
+      key,
+      keySeparator
+    );
+  }
 }
 
 ShopifyFormat.type = "i18nFormat";
