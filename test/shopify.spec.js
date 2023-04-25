@@ -173,7 +173,7 @@ describe("shopify format", () => {
       });
     });
 
-    it("should parse", () => {
+    it("should handle basic lookups", () => {
       expect(i18next.t("string")).toEqual("Hello world!");
       expect(
         i18next.t("string_with_interpolation", {
@@ -186,21 +186,48 @@ describe("shopify format", () => {
           casual_name: "Joe",
         })
       ).toEqual("Hello Joe! Hello Joe!");
-      expect(i18next.t("cardinal_pluralization.0", { count: 0 })).toEqual(
-        "I have no cars."
-      );
-      expect(i18next.t("cardinal_pluralization", { count: 0 })).toEqual(
-        "I have no cars."
-      );
+    });
+
+    it("should not fail when given excess values", () => {
+      expect(
+        i18next.t("string_with_interpolation", {
+          casual_name: "Joe",
+          date: "Monday",
+          unnecessary: "This value is not mentioned by any interpolation",
+        })
+      ).toEqual("Hello Joe! Today is Monday.");
+    });
+
+    it("should handle cardinal pluralization lookups", () => {
       expect(i18next.t("cardinal_pluralization", { count: 1 })).toEqual(
         "I have 1 car."
       );
       expect(i18next.t("cardinal_pluralization", { count: 2 })).toEqual(
         "I have 2 cars."
       );
+    });
+
+    it("should fall back to the `other` key if the proper cardinal pluralization key is missing", () => {
       expect(
+        // A count of 1 in `en` should use the `one` key, but it's missing.
+        // It should fall back to the `other` key.
         i18next.t("cardinal_pluralization_with_missing_keys", { count: 1 })
       ).toEqual("I have 1 cars.");
+    });
+
+    it("should allow explicit lookup of cardinal pluralization subkeys", () => {
+      expect(i18next.t("cardinal_pluralization.one", { count: 0 })).toEqual(
+        "I have 0 car."
+      );
+    });
+
+    it("should prefer explicit 0 keys in cardinal pluralization lookups", () => {
+      expect(i18next.t("cardinal_pluralization", { count: 0 })).toEqual(
+        "I have no cars."
+      );
+    });
+
+    it("should handle ordinal pluralization lookups (using ordinal: true)", () => {
       expect(
         i18next.t("ordinal_pluralization", { count: 1, ordinal: true })
       ).toEqual("This is my 1st car");
@@ -213,6 +240,9 @@ describe("shopify format", () => {
       expect(
         i18next.t("ordinal_pluralization", { count: 4, ordinal: true })
       ).toEqual("This is my 4th car");
+    });
+
+    it("should handle ordinal pluralization lookups (using ordinal: <number>)", () => {
       expect(i18next.t("ordinal_pluralization", { ordinal: 1 })).toEqual(
         "This is my 1st car"
       );
@@ -225,6 +255,20 @@ describe("shopify format", () => {
       expect(i18next.t("ordinal_pluralization", { ordinal: 4 })).toEqual(
         "This is my 4th car"
       );
+    });
+
+    it("should allow explicit lookup of ordinal pluralization subkeys", () => {
+      expect(
+        i18next.t("ordinal_pluralization.ordinal.one", {
+          count: 2,
+          ordinal: true,
+        })
+      ).toEqual("This is my 2st car");
+      expect(
+        i18next.t("ordinal_pluralization.ordinal.one", {
+          ordinal: 2,
+        })
+      ).toEqual("This is my 2st car");
     });
   });
 });
