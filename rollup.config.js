@@ -3,7 +3,6 @@ import { terser } from "rollup-plugin-terser";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import { argv } from "yargs";
 
-const format = argv.format || argv.f || "iife";
 const compress = argv.compact;
 
 const babelOptions = {
@@ -30,7 +29,7 @@ const output = [
   },
 ];
 
-export default {
+const config = {
   input: "src/index.js",
   plugins: [
     babel(babelOptions),
@@ -38,3 +37,5 @@ export default {
   ].concat(compress ? terser() : []),
   output,
 };
+
+export default config;

@@ -1,4 +1,8 @@
 import areIntlLocalesSupported from "intl-locales-supported";
+import i18next from "i18next";
+
+import ShopifyFormat from "../src";
+
 if (global.Intl) {
   if (!areIntlLocalesSupported(["en", "ar-AR"])) {
     const polyFill = require("intl");
@@ -9,43 +13,40 @@ if (global.Intl) {
   global.Intl = require("intl");
 }
 
-import ShopifyFormat from "../src";
-import i18next from "i18next";
-
 describe("shopify format", () => {
   describe("addLookupKeys", () => {
     beforeEach(() => {
       i18next.use(ShopifyFormat).init({ lng: "en" });
     });
 
-    it("should not add any keys for a basic key", () => {
+    it("does not add any keys for a basic key", () => {
       const shopify = new ShopifyFormat();
       const finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {});
-      expect(finalKeys).toEqual([]);
+      expect(finalKeys).toStrictEqual([]);
     });
 
-    it("should add cardinal pluralization keys relevant to the count", () => {
+    it("adds cardinal pluralization keys relevant to the count", () => {
       const shopify = new ShopifyFormat();
       shopify.init(i18next, {});
       let finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, { count: 0 });
-      expect(finalKeys).toEqual(["key.other", "key.0"]);
+      expect(finalKeys).toStrictEqual(["key.other", "key.0"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, { count: 1 });
-      expect(finalKeys).toEqual(["key.other", "key.one", "key.1"]);
+      expect(finalKeys).toStrictEqual(["key.other", "key.one", "key.1"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, { count: 2 });
-      expect(finalKeys).toEqual(["key.other"]);
+      expect(finalKeys).toStrictEqual(["key.other"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "ar-AR", undefined, { count: 0 });
-      expect(finalKeys).toEqual(["key.other", "key.zero", "key.0"]);
+      expect(finalKeys).toStrictEqual(["key.other", "key.zero", "key.0"]);
     });
 
-    it("should add ordinal pluralization keys relevant to the count (ordinal: true)", () => {
+    it("adds ordinal pluralization keys relevant to the count (ordinal: true)", () => {
       const shopify = new ShopifyFormat();
       shopify.init(i18next, {});
       let finalKeys = [];
@@ -53,91 +54,91 @@ describe("shopify format", () => {
         count: 0,
         ordinal: true,
       });
-      expect(finalKeys).toEqual(["key.ordinal.other"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.other"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         count: 1,
         ordinal: true,
       });
-      expect(finalKeys).toEqual(["key.ordinal.one"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.one"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         count: 2,
         ordinal: true,
       });
-      expect(finalKeys).toEqual(["key.ordinal.two"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.two"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         count: 3,
         ordinal: true,
       });
-      expect(finalKeys).toEqual(["key.ordinal.few"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.few"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "ar-AR", undefined, {
         count: 0,
         ordinal: true,
       });
-      expect(finalKeys).toEqual(["key.ordinal.other"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.other"]);
     });
 
-    it("should add ordinal pluralization keys relevant to the count (ordinal: <number>)", () => {
+    it("adds ordinal pluralization keys relevant to the count (ordinal: <number>)", () => {
       const shopify = new ShopifyFormat();
       shopify.init(i18next, {});
       let finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 0,
       });
-      expect(finalKeys).toEqual(["key.ordinal.other"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.other"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 1,
       });
-      expect(finalKeys).toEqual(["key.ordinal.one"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.one"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 2,
       });
-      expect(finalKeys).toEqual(["key.ordinal.two"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.two"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 3,
       });
-      expect(finalKeys).toEqual(["key.ordinal.few"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.few"]);
 
       finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "ar-AR", undefined, {
         ordinal: 0,
       });
-      expect(finalKeys).toEqual(["key.ordinal.other"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.other"]);
     });
 
-    it("should use `count` in preference to `ordinal`", () => {
+    it("uses `count` in preference to `ordinal`", () => {
       const shopify = new ShopifyFormat();
       shopify.init(i18next, {});
-      let finalKeys = [];
+      const finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 4,
         count: 1,
       });
-      expect(finalKeys).toEqual(["key.ordinal.one"]);
+      expect(finalKeys).toStrictEqual(["key.ordinal.one"]);
     });
 
-    it("should add cardinal pluralization keys in edge case conflict", () => {
+    it("adds cardinal pluralization keys in edge case conflict", () => {
       const shopify = new ShopifyFormat();
       shopify.init(i18next, {});
-      let finalKeys = [];
+      const finalKeys = [];
       shopify.addLookupKeys(finalKeys, "key", "en", undefined, {
         ordinal: 0,
         count: 1,
       });
-      expect(finalKeys).toEqual(["key.other", "key.one", "key.1"]);
+      expect(finalKeys).toStrictEqual(["key.other", "key.one", "key.1"]);
     });
   });
 
@@ -173,102 +174,102 @@ describe("shopify format", () => {
       });
     });
 
-    it("should handle basic lookups", () => {
-      expect(i18next.t("string")).toEqual("Hello world!");
+    it("handles basic lookups", () => {
+      expect(i18next.t("string")).toBe("Hello world!");
       expect(
         i18next.t("string_with_interpolation", {
           casual_name: "Joe",
           date: "Monday",
-        })
-      ).toEqual("Hello Joe! Today is Monday.");
+        }),
+      ).toBe("Hello Joe! Today is Monday.");
       expect(
         i18next.t("string_with_repeated_interpolation", {
           casual_name: "Joe",
-        })
-      ).toEqual("Hello Joe! Hello Joe!");
+        }),
+      ).toBe("Hello Joe! Hello Joe!");
     });
 
-    it("should not fail when given excess values", () => {
+    it("does not fail when given excess values", () => {
       expect(
         i18next.t("string_with_interpolation", {
           casual_name: "Joe",
           date: "Monday",
           unnecessary: "This value is not mentioned by any interpolation",
-        })
-      ).toEqual("Hello Joe! Today is Monday.");
+        }),
+      ).toBe("Hello Joe! Today is Monday.");
     });
 
-    it("should handle cardinal pluralization lookups", () => {
-      expect(i18next.t("cardinal_pluralization", { count: 1 })).toEqual(
-        "I have 1 car."
+    it("handles cardinal pluralization lookups", () => {
+      expect(i18next.t("cardinal_pluralization", { count: 1 })).toBe(
+        "I have 1 car.",
       );
-      expect(i18next.t("cardinal_pluralization", { count: 2 })).toEqual(
-        "I have 2 cars."
+      expect(i18next.t("cardinal_pluralization", { count: 2 })).toBe(
+        "I have 2 cars.",
       );
     });
 
-    it("should fall back to the `other` key if the proper cardinal pluralization key is missing", () => {
+    it("falls back to the `other` key if the proper cardinal pluralization key is missing", () => {
       expect(
         // A count of 1 in `en` should use the `one` key, but it's missing.
         // It should fall back to the `other` key.
-        i18next.t("cardinal_pluralization_with_missing_keys", { count: 1 })
-      ).toEqual("I have 1 cars.");
+        i18next.t("cardinal_pluralization_with_missing_keys", { count: 1 }),
+      ).toBe("I have 1 cars.");
     });
 
-    it("should allow explicit lookup of cardinal pluralization subkeys", () => {
-      expect(i18next.t("cardinal_pluralization.one", { count: 0 })).toEqual(
-        "I have 0 car."
+    it("allows explicit lookup of cardinal pluralization subkeys", () => {
+      expect(i18next.t("cardinal_pluralization.one", { count: 0 })).toBe(
+        "I have 0 car.",
       );
     });
 
-    it("should prefer explicit 0 keys in cardinal pluralization lookups", () => {
-      expect(i18next.t("cardinal_pluralization", { count: 0 })).toEqual(
-        "I have no cars."
+    it("prefers explicit 0 keys in cardinal pluralization lookups", () => {
+      expect(i18next.t("cardinal_pluralization", { count: 0 })).toBe(
+        "I have no cars.",
       );
     });
 
-    it("should handle ordinal pluralization lookups (using ordinal: true)", () => {
+    it("handles ordinal pluralization lookups (using ordinal: true)", () => {
       expect(
-        i18next.t("ordinal_pluralization", { count: 1, ordinal: true })
-      ).toEqual("This is my 1st car");
+        i18next.t("ordinal_pluralization", { count: 1, ordinal: true }),
+      ).toBe("This is my 1st car");
       expect(
-        i18next.t("ordinal_pluralization", { count: 2, ordinal: true })
-      ).toEqual("This is my 2nd car");
+        i18next.t("ordinal_pluralization", { count: 2, ordinal: true }),
+      ).toBe("This is my 2nd car");
       expect(
-        i18next.t("ordinal_pluralization", { count: 3, ordinal: true })
-      ).toEqual("This is my 3rd car");
+        i18next.t("ordinal_pluralization", { count: 3, ordinal: true }),
+      ).toBe("This is my 3rd car");
       expect(
-        i18next.t("ordinal_pluralization", { count: 4, ordinal: true })
-      ).toEqual("This is my 4th car");
+        i18next.t("ordinal_pluralization", { count: 4, ordinal: true }),
+      ).toBe("This is my 4th car");
     });
 
-    it("should handle ordinal pluralization lookups (using ordinal: <number>)", () => {
-      expect(i18next.t("ordinal_pluralization", { ordinal: 1 })).toEqual(
-        "This is my 1st car"
+    it("handles ordinal pluralization lookups (using ordinal: <number>)", () => {
+      expect(i18next.t("ordinal_pluralization", { ordinal: 1 })).toBe(
+        "This is my 1st car",
       );
-      expect(i18next.t("ordinal_pluralization", { ordinal: 2 })).toEqual(
-        "This is my 2nd car"
+      expect(i18next.t("ordinal_pluralization", { ordinal: 2 })).toBe(
+        "This is my 2nd car",
       );
-      expect(i18next.t("ordinal_pluralization", { ordinal: 3 })).toEqual(
-        "This is my 3rd car"
+      expect(i18next.t("ordinal_pluralization", { ordinal: 3 })).toBe(
+        "This is my 3rd car",
       );
-      expect(i18next.t("ordinal_pluralization", { ordinal: 4 })).toEqual(
-        "This is my 4th car"
+      expect(i18next.t("ordinal_pluralization", { ordinal: 4 })).toBe(
+        "This is my 4th car",
       );
     });
 
-    it("should allow explicit lookup of ordinal pluralization subkeys", () => {
+    it("allows explicit lookup of ordinal pluralization subkeys", () => {
       expect(
         i18next.t("ordinal_pluralization.ordinal.one", {
           count: 2,
           ordinal: true,
-        })
-      ).toEqual("This is my 2st car");
+        }),
+      ).toBe("This is my 2st car");
       expect(
         i18next.t("ordinal_pluralization.ordinal.one", {
           ordinal: 2,
-        })
-      ).toEqual("This is my 2st car");
+        }),
+      ).toBe("This is my 2st car");
     });
   });
 });
