@@ -1,8 +1,10 @@
-import * as utils from "./utils.js";
+import * as utils from "./utils";
 
 function getDefaults() {
   return {};
 }
+
+const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
 
 class ShopifyFormat {
   constructor(options) {
@@ -18,49 +20,52 @@ class ShopifyFormat {
       i18nextOptions,
       options,
       this.options || {},
-      getDefaults()
+      getDefaults(),
     );
     this.i18next = i18next;
   }
 
-  // i18next is roughly a superset of Shopify's format.
-  // TODO: Implement this to make sure that we enforce just the subset
-  // TODO: Implement this to make ordinal pluralization work
-
   // Implement custom interpolation logic
   // While i18next and Shopify's format both use the mustache syntax for interpolation,
   // Shopify uses the `ordinal` interpolation for ordinal pluralization, while i18next uses `count`.
-  parse(res, options, lng, ns, key, info) {
-    const hadSuccessfulLookup = info && info.resolved && info.resolved.res;
+  // parse(res, options, lng, ns, key, info)
+  parse(res, options) {
+    // const hadSuccessfulLookup = info && info.resolved && info.resolved.res;
 
     // Interpolations
-    const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
     const matches = res.match(MUSTACHE_FORMAT);
-    if (!matches) return res;
+    if (!matches) {
+      return res;
+    }
+
+    let interpolated = res;
     matches.forEach((match) => {
       const interpolation_key = match.replace(MUSTACHE_FORMAT, "$1");
       const value =
         interpolation_key === "ordinal"
-          ? options["count"] || options["ordinal"]
+          ? options.count || options.ordinal
           : options[interpolation_key];
       if (value !== undefined) {
-        res = res.replace(match, value);
+        interpolated = interpolated.replace(match, value);
       }
     });
-    return res;
+    return interpolated;
   }
 
   // Add any other locations that should be searched first for an answer to the lookup
   // Add keys to `finalKeys` in reverse order (e.g., least specific -> most specific)
   // Useful when defining keys for pluralization or other context cases (e.g., grammatical gender)
   addLookupKeys(finalKeys, key, code, ns, options) {
-    const needsPluralHandling =
+    const needsPluralHandling = Boolean(
       (options.count !== undefined && typeof options.count !== "string") ||
-      typeof options.ordinal == "number";
+      typeof options.ordinal === "number",
+    );
 
     if (needsPluralHandling) {
       if (!this.i18next.translator.pluralResolver.shouldUseIntlApi()) {
-        throw new Error("We need that to exist"); // TODO
+        // eslint-disable-next-line no-warning-comments
+        // TODO: Figure out the proper way to handle this
+        throw new Error("We need that to exist");
       }
 
       // Shopify uses the "ordinal" interpolation for ordinal pluralization (i.e., {{ordinal}}), users will expect to
@@ -70,9 +75,10 @@ class ShopifyFormat {
       // So we support either, using count if provided.
       // There is an edge case: if `ordinal` were set explicitly to 0, and `count` is provided, we behave as i18next
       // does, treating it as cardinal pluralization.
-      const needsOrdinalHandling =
+      const needsOrdinalHandling = Boolean(
         options.ordinal ||
-        (options.ordinal == 0 && options.count === undefined);
+        (options.ordinal === 0 && options.count === undefined),
+      );
 
       const pluralRule = this.i18next.translator.pluralResolver.getRule(code, {
         ...options,
@@ -81,7 +87,7 @@ class ShopifyFormat {
 
       if (needsOrdinalHandling) {
         const ruleName = pluralRule.select(
-          options.count !== undefined ? options.count : options.ordinal
+          options.count === undefined ? options.ordinal : options.count,
         );
         const pluralSuffix = `${this.i18next.options.keySeparator}ordinal${this.i18next.options.keySeparator}${ruleName}`;
         finalKeys.push(key + pluralSuffix);
@@ -117,19 +123,22 @@ class ShopifyFormat {
     // https://github.com/i18next/i18next/blob/ac4b6701c3ce9596e4eb88f5d774ca66f05d71fb/src/ResourceStore.js#L34-L56
     // except we ignore the namespace, since Shopify's format doesn't have namespaces.
     const keySeparator =
-      options.keySeparator !== undefined
-        ? options.keySeparator
-        : this.i18next.translator.resourceStore.options.keySeparator;
+      options.keySeparator === undefined
+        ? this.i18next.translator.resourceStore.options.keySeparator
+        : options.keySeparator;
 
     const ignoreJSONStructure =
-      options.ignoreJSONStructure !== undefined
-        ? options.ignoreJSONStructure
-        : this.i18next.translator.resourceStore.options.ignoreJSONStructure;
+      options.ignoreJSONStructure === undefined
+        ? this.i18next.translator.resourceStore.options.ignoreJSONStructure
+        : options.ignoreJSONStructure;
 
     let path = [lng];
-    if (key && typeof key !== "string") path = path.concat(key);
-    if (key && typeof key === "string")
+    if (key && typeof key !== "string") {
+      path = path.concat(key);
+    }
+    if (key && typeof key === "string") {
       path = path.concat(keySeparator ? key.split(keySeparator) : key);
+    }
 
     if (lng.indexOf(".") > -1) {
       path = lng.split(".");
@@ -137,15 +146,16 @@ class ShopifyFormat {
 
     const result = utils.getPath(
       this.i18next.translator.resourceStore.data,
-      path
+      path,
     );
-    if (result || !ignoreJSONStructure || typeof key !== "string")
+    if (result || !ignoreJSONStructure || typeof key !== "string") {
       return result;
+    }
 
     return utils.deepFind(
       this.i18next.translator.resourceStore.data[lng],
       key,
-      keySeparator
+      keySeparator,
     );
   }
 }
