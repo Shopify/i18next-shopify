@@ -8,6 +8,10 @@
     "i18next",
     "i18next-format"
   ],
+  "publishConfig": {
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
+  },
   "homepage": "https://github.com/Shopify/i18next-shopify",
   "bugs": "https://github.com/Shopify/i18next-shopify/issues",
   "repository": {
