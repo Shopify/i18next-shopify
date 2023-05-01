@@ -16,7 +16,6 @@ jobs:
         node-version: ['16.13.0']
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       - name: Setup Node with v${{ matrix.node-version }}

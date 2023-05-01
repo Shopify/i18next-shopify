@@ -1,8 +1,10 @@
 # `@shopify/i18next-shopify`
 
-An `i18nFormat` plugin for [i18next](https://www.i18next.com/), which allows you to use the format used by Shopify apps and [themes](https://shopify.dev/docs/themes/architecture/locales/storefront-locale-files#usage).
+An `i18nFormat` plugin for [i18next](https://www.i18next.com/), which allows you to use the format used by Shopify [apps](https://shopify.dev/docs/apps/checkout/best-practices/localizing-ui-extensions#how-it-works) and [themes](https://shopify.dev/docs/themes/architecture/locales/storefront-locale-files#usage).
 
-Currently in pre-alpha; not ready for use.
+## WIP Status
+
+Pre-alpha; not ready for use. We also won't be accepting external contributions at this point.
 
 ## Getting started
 
