@@ -4,7 +4,7 @@ An `i18nFormat` plugin for [i18next](https://www.i18next.com/), which allows you
 
 ## WIP Status
 
-Pre-alpha; not ready for use. We also won't be accepting external contributions at this point.
+Pre-alpha; not ready for use. We also won't be accepting external contributions at this point. 
 
 ## Getting started
 
