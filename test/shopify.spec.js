@@ -18,6 +18,11 @@ if (global.Intl) {
   global.Intl = require("intl");
 }
 
+// eslint-disable-next-line react/prop-types
+function Link({ to, children }) {
+  return <a href={to}>{children}</a>;
+}
+
 describe("shopify format", () => {
   describe("addLookupKeys", () => {
     beforeEach(() => {
@@ -589,6 +594,82 @@ describe("shopify format", () => {
       const { container } = render(<TestComponent />);
       expect(container.childNodes[0]).toHaveTextContent("This is my 2st car");
       expect(container.childNodes[1]).toHaveTextContent("This is my 2st car");
+    });
+  });
+
+  describe("with react-i18next (Trans with interpolation)", () => {
+    beforeEach(() => {
+      cleanup();
+      i18next
+        .use(ShopifyFormat)
+        .use(initReactI18next)
+        .init({
+          lng: "en",
+          resources: {
+            en: {
+              nameTitle: "This is your name",
+              // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
+              // doesn't break things when used with react-i18next in embedded apps.
+              userMessagesUnread: {
+                one: "Hello <1>{{name}}</1>, you have {{count}} unread message. <5>Go to message</5>.",
+                other: "Hello <1>{{name}}</1>, you have {{count}} unread messages.  <5>Go to messages</5>.",
+              },
+              // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
+              // doesn't break things when used with react-i18next in embedded apps.
+              userMessagesUnreadExplicit: {
+                one: "Hello <Name>{{name}}</Name>, you have {{count}} unread message. <MessagesLink>Go to message</MessagesLink>.",
+                other: "Hello <Name>{{name}}</Name>, you have {{count}} unread messages.  <MessagesLink>Go to messages</MessagesLink>.",
+              },
+            },
+          },
+        });
+    });
+
+    it("handles interpolation of React components", () => {
+      const { result } = renderHook(() => useTranslation('translation'));
+      const { t } = result.current;
+
+      const MyComponent = () => {
+        const name = "Joe";
+        const count = 1;
+
+        return (
+          <Trans i18nKey="userMessagesUnread" count={count}>
+            Hello <strong title={t('nameTitle')}>{{name}}</strong>, you have {{count}} unread message. <Link to="/msgs">Go to messages</Link>.
+          </Trans>
+        );
+      };
+
+      const { container } = render(<MyComponent />);
+      expect(container).toHaveTextContent("Hello Joe, you have 1 unread message. Go to message.");
+      expect(container).toMatchSnapshot();
+    });
+
+    it("handles interpolation of React components using explicit components", () => {
+      const { result } = renderHook(() => useTranslation('translation'));
+      const { t } = result.current;
+
+      const MyComponent = () => {
+        const count = 1;
+        const name = "Joe";
+
+        return (
+          <Trans i18nKey="userMessagesUnreadExplicit"
+            count={count}
+            values={{
+              name,
+            }}
+            components={{
+              Name: <strong title={t('nameTitle')}/>,
+              MessagesLink: <Link to="/msgs"/>,
+            }}
+          />
+        );
+      };
+
+      const { container } = render(<MyComponent/>);
+      expect(container).toHaveTextContent("Hello Joe, you have 1 unread message. Go to message.");
+      expect(container).toMatchSnapshot();
     });
   });
 });

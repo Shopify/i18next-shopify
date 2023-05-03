@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shopify format with react-i18next (Trans with interpolation) handles interpolation of React components 1`] = `
+<div>
+  Hello 
+  <strong
+    title="This is your name"
+  >
+    Joe
+  </strong>
+  , you have 1 unread message. 
+  <a
+    href="/msgs"
+  >
+    Go to message
+  </a>
+  .
+</div>
+`;
+
+exports[`shopify format with react-i18next (Trans with interpolation) handles interpolation of React components using explicit components 1`] = `
+<div>
+  Hello 
+  <strong
+    title="This is your name"
+  >
+    Joe
+  </strong>
+  , you have 1 unread message. 
+  <a
+    href="/msgs"
+  >
+    Go to message
+  </a>
+  .
+</div>
+`;
