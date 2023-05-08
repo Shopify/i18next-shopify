@@ -6,27 +6,28 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:@shopify/jest",
-    "plugin:@shopify/esnext",
-    "plugin:testing-library/react",
-    "plugin:jest-dom/recommended",
-    "plugin:react/recommended",
+    'plugin:@shopify/jest',
+    'plugin:@shopify/esnext',
+    'plugin:@shopify/prettier',
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
+    'plugin:react/recommended',
   ],
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
       impliedStrict: true,
     },
   },
   rules: {
-    "@babel/object-curly-spacing": "off",
+    '@babel/object-curly-spacing': 'off',
   },
 };

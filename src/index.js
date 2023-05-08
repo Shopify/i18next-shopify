@@ -1,4 +1,4 @@
-import * as utils from "./utils";
+import * as utils from './utils';
 
 function getDefaults() {
   return {};
@@ -8,7 +8,7 @@ const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
 
 class ShopifyFormat {
   constructor(options) {
-    this.type = "i18nFormat";
+    this.type = 'i18nFormat';
 
     this.init(null, options);
   }
@@ -40,9 +40,9 @@ class ShopifyFormat {
 
     let interpolated = res;
     matches.forEach((match) => {
-      const interpolation_key = match.replace(MUSTACHE_FORMAT, "$1");
+      const interpolation_key = match.replace(MUSTACHE_FORMAT, '$1');
       const value =
-        interpolation_key === "ordinal"
+        interpolation_key === 'ordinal'
           ? options.count || options.ordinal
           : options[interpolation_key];
       if (value !== undefined) {
@@ -57,15 +57,15 @@ class ShopifyFormat {
   // Useful when defining keys for pluralization or other context cases (e.g., grammatical gender)
   addLookupKeys(finalKeys, key, code, ns, options) {
     const needsPluralHandling = Boolean(
-      (options.count !== undefined && typeof options.count !== "string") ||
-      typeof options.ordinal === "number",
+      (options.count !== undefined && typeof options.count !== 'string') ||
+        typeof options.ordinal === 'number',
     );
 
     if (needsPluralHandling) {
       if (!this.i18next.translator.pluralResolver.shouldUseIntlApi()) {
         // eslint-disable-next-line no-warning-comments
         // TODO: Figure out the proper way to handle this
-        throw new Error("We need that to exist");
+        throw new Error('We need that to exist');
       }
 
       // Shopify uses the "ordinal" interpolation for ordinal pluralization (i.e., {{ordinal}}), users will expect to
@@ -77,7 +77,7 @@ class ShopifyFormat {
       // does, treating it as cardinal pluralization.
       const needsOrdinalHandling = Boolean(
         options.ordinal ||
-        (options.ordinal === 0 && options.count === undefined),
+          (options.ordinal === 0 && options.count === undefined),
       );
 
       const pluralRule = this.i18next.translator.pluralResolver.getRule(code, {
@@ -95,7 +95,7 @@ class ShopifyFormat {
         const ruleName = pluralRule.select(options.count);
 
         // Fallback to "other" key
-        if (ruleName !== "other") {
+        if (ruleName !== 'other') {
           const otherSubkey = `${this.i18next.options.keySeparator}other`;
           finalKeys.push(key + otherSubkey);
         }
@@ -133,22 +133,22 @@ class ShopifyFormat {
         : options.ignoreJSONStructure;
 
     let path = [lng];
-    if (key && typeof key !== "string") {
+    if (key && typeof key !== 'string') {
       path = path.concat(key);
     }
-    if (key && typeof key === "string") {
+    if (key && typeof key === 'string') {
       path = path.concat(keySeparator ? key.split(keySeparator) : key);
     }
 
-    if (lng.indexOf(".") > -1) {
-      path = lng.split(".");
+    if (lng.indexOf('.') > -1) {
+      path = lng.split('.');
     }
 
     const result = utils.getPath(
       this.i18next.translator.resourceStore.data,
       path,
     );
-    if (result || !ignoreJSONStructure || typeof key !== "string") {
+    if (result || !ignoreJSONStructure || typeof key !== 'string') {
       return result;
     }
 
@@ -160,6 +160,6 @@ class ShopifyFormat {
   }
 }
 
-ShopifyFormat.type = "i18nFormat";
+ShopifyFormat.type = 'i18nFormat';
 
 export default ShopifyFormat;

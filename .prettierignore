@@ -1,0 +1,11 @@
+.dev/*
+.github/*
+.shadowenv.d/*
+coverage/*
+**/*.min.*
+**/dist/*
+**/node_modules/*
+
+/i18nextShopify.js
+/i18nextShopify.min.js
+/index.js

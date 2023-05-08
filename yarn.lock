@@ -1821,6 +1821,11 @@
     pkg-dir "^5.0.0"
     pluralize "^8.0.0"
 
+"@shopify/prettier-config@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@shopify/prettier-config/-/prettier-config-1.1.2.tgz#612f87c0cd1196e8b43c85425e587d0fa7f1172d"
+  integrity sha512-5ugCL9sPGzmOaZjeRGaWUWhHgAbemrS6z+R7v6gwiD+BiqSeoFhIY+imLpfdFCVpuOGalpHeCv6o3gv++EHs0A==
+
 "@shopify/stylelint-plugin@^11.0.0":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@shopify/stylelint-plugin/-/stylelint-plugin-11.0.1.tgz#30523064d60524a6c619ca12f2791120b744c810"
@@ -5764,7 +5769,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.7.1:
+prettier@^2.7.1, prettier@^2.8.8:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
