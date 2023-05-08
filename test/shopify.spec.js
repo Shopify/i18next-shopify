@@ -158,25 +158,27 @@ describe('shopify format', () => {
         lng: 'en',
         resources: {
           en: {
-            string: 'Hello world!',
-            string_with_interpolation:
-              'Hello {{casual_name}}! Today is {{date}}.',
-            string_with_repeated_interpolation:
-              'Hello {{casual_name}}! Hello {{casual_name}}!',
-            cardinal_pluralization: {
-              0: 'I have no cars.',
-              one: 'I have {{count}} car.',
-              other: 'I have {{count}} cars.',
-            },
-            cardinal_pluralization_with_missing_keys: {
-              other: 'I have {{count}} cars.',
-            },
-            ordinal_pluralization: {
-              ordinal: {
-                one: 'This is my {{ordinal}}st car',
-                two: 'This is my {{ordinal}}nd car',
-                few: 'This is my {{ordinal}}rd car',
-                other: 'This is my {{ordinal}}th car',
+            translation: {
+              string: 'Hello world!',
+              string_with_interpolation:
+                'Hello {{casual_name}}! Today is {{date}}.',
+              string_with_repeated_interpolation:
+                'Hello {{casual_name}}! Hello {{casual_name}}!',
+              cardinal_pluralization: {
+                0: 'I have no cars.',
+                one: 'I have {{count}} car.',
+                other: 'I have {{count}} cars.',
+              },
+              cardinal_pluralization_with_missing_keys: {
+                other: 'I have {{count}} cars.',
+              },
+              ordinal_pluralization: {
+                ordinal: {
+                  one: 'This is my {{ordinal}}st car',
+                  two: 'This is my {{ordinal}}nd car',
+                  few: 'This is my {{ordinal}}rd car',
+                  other: 'This is my {{ordinal}}th car',
+                },
               },
             },
           },
@@ -292,25 +294,27 @@ describe('shopify format', () => {
           lng: 'en',
           resources: {
             en: {
-              string: 'Hello world!',
-              string_with_interpolation:
-                'Hello {{casual_name}}! Today is {{date}}.',
-              string_with_repeated_interpolation:
-                'Hello {{casual_name}}! Hello {{casual_name}}!',
-              cardinal_pluralization: {
-                0: 'I have no cars.',
-                one: 'I have {{count}} car.',
-                other: 'I have {{count}} cars.',
-              },
-              cardinal_pluralization_with_missing_keys: {
-                other: 'I have {{count}} cars.',
-              },
-              ordinal_pluralization: {
-                ordinal: {
-                  one: 'This is my {{ordinal}}st car',
-                  two: 'This is my {{ordinal}}nd car',
-                  few: 'This is my {{ordinal}}rd car',
-                  other: 'This is my {{ordinal}}th car',
+              translation: {
+                string: 'Hello world!',
+                string_with_interpolation:
+                  'Hello {{casual_name}}! Today is {{date}}.',
+                string_with_repeated_interpolation:
+                  'Hello {{casual_name}}! Hello {{casual_name}}!',
+                cardinal_pluralization: {
+                  0: 'I have no cars.',
+                  one: 'I have {{count}} car.',
+                  other: 'I have {{count}} cars.',
+                },
+                cardinal_pluralization_with_missing_keys: {
+                  other: 'I have {{count}} cars.',
+                },
+                ordinal_pluralization: {
+                  ordinal: {
+                    one: 'This is my {{ordinal}}st car',
+                    two: 'This is my {{ordinal}}nd car',
+                    few: 'This is my {{ordinal}}rd car',
+                    other: 'This is my {{ordinal}}th car',
+                  },
                 },
               },
             },
@@ -446,25 +450,27 @@ describe('shopify format', () => {
           lng: 'en',
           resources: {
             en: {
-              string: 'Hello world!',
-              string_with_interpolation:
-                'Hello {{casual_name}}! Today is {{date}}.',
-              string_with_repeated_interpolation:
-                'Hello {{casual_name}}! Hello {{casual_name}}!',
-              cardinal_pluralization: {
-                0: 'I have no cars.',
-                one: 'I have {{count}} car.',
-                other: 'I have {{count}} cars.',
-              },
-              cardinal_pluralization_with_missing_keys: {
-                other: 'I have {{count}} cars.',
-              },
-              ordinal_pluralization: {
-                ordinal: {
-                  one: 'This is my {{ordinal}}st car',
-                  two: 'This is my {{ordinal}}nd car',
-                  few: 'This is my {{ordinal}}rd car',
-                  other: 'This is my {{ordinal}}th car',
+              translation: {
+                string: 'Hello world!',
+                string_with_interpolation:
+                  'Hello {{casual_name}}! Today is {{date}}.',
+                string_with_repeated_interpolation:
+                  'Hello {{casual_name}}! Hello {{casual_name}}!',
+                cardinal_pluralization: {
+                  0: 'I have no cars.',
+                  one: 'I have {{count}} car.',
+                  other: 'I have {{count}} cars.',
+                },
+                cardinal_pluralization_with_missing_keys: {
+                  other: 'I have {{count}} cars.',
+                },
+                ordinal_pluralization: {
+                  ordinal: {
+                    one: 'This is my {{ordinal}}st car',
+                    two: 'This is my {{ordinal}}nd car',
+                    few: 'This is my {{ordinal}}rd car',
+                    other: 'This is my {{ordinal}}th car',
+                  },
                 },
               },
             },
@@ -633,20 +639,22 @@ describe('shopify format', () => {
           lng: 'en',
           resources: {
             en: {
-              nameTitle: 'This is your name',
-              // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
-              // doesn't break things when used with react-i18next in embedded apps.
-              userMessagesUnread: {
-                one: 'Hello <1>{{name}}</1>, you have {{count}} unread message. <6>Go to message</6>.',
-                other:
-                  'Hello <1>{{name}}</1>, you have {{count}} unread messages.  <6>Go to messages</6>.',
-              },
-              // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
-              // doesn't break things when used with react-i18next in embedded apps.
-              userMessagesUnreadExplicit: {
-                one: 'Hello <Name>{{name}}</Name>, you have {{count}} unread message. <MessagesLink>Go to message</MessagesLink>.',
-                other:
-                  'Hello <Name>{{name}}</Name>, you have {{count}} unread messages.  <MessagesLink>Go to messages</MessagesLink>.',
+              translation: {
+                nameTitle: 'This is your name',
+                // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
+                // doesn't break things when used with react-i18next in embedded apps.
+                userMessagesUnread: {
+                  one: 'Hello <1>{{name}}</1>, you have {{count}} unread message. <6>Go to message</6>.',
+                  other:
+                    'Hello <1>{{name}}</1>, you have {{count}} unread messages. <6>Go to messages</6>.',
+                },
+                // This isn't valid syntax for app extensions, but we include it here to make sure that this plugin
+                // doesn't break things when used with react-i18next in embedded apps.
+                userMessagesUnreadExplicit: {
+                  one: 'Hello <Name>{{name}}</Name>, you have {{count}} unread message. <MessagesLink>Go to message</MessagesLink>.',
+                  other:
+                    'Hello <Name>{{name}}</Name>, you have {{count}} unread messages. <MessagesLink>Go to messages</MessagesLink>.',
+                },
               },
             },
           },
