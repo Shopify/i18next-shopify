@@ -629,7 +629,7 @@ describe('shopify format', () => {
     });
   });
 
-  describe('with react-i18next (Trans with interpolation)', () => {
+  describe('with react-i18next', () => {
     beforeEach(() => {
       cleanup();
       i18next
@@ -655,13 +655,22 @@ describe('shopify format', () => {
                   other:
                     'Hello <Name>{{name}}</Name>, you have {{count}} unread messages. <MessagesLink>Go to messages</MessagesLink>.',
                 },
+                userMessagesUnreadSimple: {
+                  one: 'Hello {{name}}, you have {{count}} unread message. {{messageLink}}',
+                  other:
+                    'Hello {{name}}, you have {{count}} unread messages. {{messageLink}}',
+                },
+                messageLinkText: {
+                  one: 'Go to message.',
+                  other: 'Go to messages.',
+                },
               },
             },
           },
         });
     });
 
-    it('handles interpolation of React components', () => {
+    it('handles interpolation of React components using Trans component with numbered component tags', () => {
       const {result} = renderHook(() => useTranslation('translation'));
       const {t} = result.current;
 
@@ -684,7 +693,7 @@ describe('shopify format', () => {
       expect(container).toMatchSnapshot();
     });
 
-    it('handles interpolation of React components using explicit components', () => {
+    it('handles interpolation of React components using Trans component with explicit component tags', () => {
       const {result} = renderHook(() => useTranslation('translation'));
       const {t} = result.current;
 
@@ -704,6 +713,34 @@ describe('shopify format', () => {
               MessagesLink: <Link to="/msgs" />,
             }}
           />
+        );
+      };
+
+      const {container} = render(<MyComponent />);
+      expect(container).toHaveTextContent(
+        'Hello Joe, you have 1 unread message. Go to message.',
+      );
+      expect(container).toMatchSnapshot();
+    });
+
+    it('handles interpolation of React components using t() function with React components passed as interpolation variables', () => {
+      const {result} = renderHook(() => useTranslation('translation'));
+      const {t} = result.current;
+
+      const MyComponent = () => {
+        const count = 1;
+        const name = 'Joe';
+
+        return (
+          <>
+            {t('userMessagesUnreadSimple', {
+              count,
+              name: <strong title={t('nameTitle')}>{name}</strong>,
+              messageLink: (
+                <Link to="/msgs">{t('messageLinkText', {count})}</Link>
+              ),
+            })}
+          </>
         );
       };
 
