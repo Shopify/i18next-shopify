@@ -1,10 +1,4 @@
-# Changelog
-
-## 0.0.3
-
-### Patch Changes
-
-- db2f198: Support namespaces in translation resources
+# Changelogg
 
 ## 0.0.2
 
