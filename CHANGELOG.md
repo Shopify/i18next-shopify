@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.1.0
+
+### Minor Changes
+
+- d1936ee: Add support for single mustache format
+
 ## 0.0.4
 
 ### Patch Changes
