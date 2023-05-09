@@ -160,6 +160,7 @@ describe('shopify format', () => {
           en: {
             translation: {
               string: 'Hello world!',
+              string_with_single_mustache: 'Hello {name}!',
               string_with_interpolation:
                 'Hello {{casual_name}}! Today is {{date}}.',
               string_with_repeated_interpolation:
@@ -199,6 +200,11 @@ describe('shopify format', () => {
           casual_name: 'Joe',
         }),
       ).toBe('Hello Joe! Hello Joe!');
+      expect(
+        i18next.t('string_with_single_mustache', {
+          name: 'Joe',
+        }),
+      ).toBe('Hello Joe!');
     });
 
     it('does not fail when given excess values', () => {
@@ -296,6 +302,7 @@ describe('shopify format', () => {
             en: {
               translation: {
                 string: 'Hello world!',
+                string_with_single_mustache: 'Hello {name}!',
                 string_with_interpolation:
                   'Hello {{casual_name}}! Today is {{date}}.',
                 string_with_repeated_interpolation:
@@ -338,6 +345,11 @@ describe('shopify format', () => {
           casual_name: 'Joe',
         }),
       ).toBe('Hello Joe! Hello Joe!');
+      expect(
+        i18next.t('string_with_single_mustache', {
+          name: 'Joe',
+        }),
+      ).toBe('Hello Joe!');
     });
 
     it('does not fail when given excess values', () => {
@@ -452,6 +464,7 @@ describe('shopify format', () => {
             en: {
               translation: {
                 string: 'Hello world!',
+                string_with_single_mustache: 'Hello {name}!',
                 string_with_interpolation:
                   'Hello {{casual_name}}! Today is {{date}}.',
                 string_with_repeated_interpolation:
@@ -490,6 +503,7 @@ describe('shopify format', () => {
             i18nKey="string_with_repeated_interpolation"
             values={{casual_name: 'Joe'}}
           />
+          <Trans i18nKey="string_with_single_mustache" values={{name: 'Joe'}} />
         </>
       );
       const {container} = render(<TestComponent />);
@@ -500,6 +514,7 @@ describe('shopify format', () => {
       expect(container.childNodes[2]).toHaveTextContent(
         'Hello Joe! Hello Joe!',
       );
+      expect(container.childNodes[3]).toHaveTextContent('Hello Joe!');
     });
 
     it('does not fail when given excess values', () => {
