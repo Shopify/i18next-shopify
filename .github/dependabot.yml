@@ -8,4 +8,4 @@ updates:
     registries: "*"
     labels:
       # We do not need changelogs because all dependencies are currently dev dependencies
-      - 🤖Skip Changelog'
+      - 🤖Skip Changelog
