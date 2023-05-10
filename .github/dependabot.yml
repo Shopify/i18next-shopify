@@ -6,3 +6,6 @@ updates:
       interval: daily
     open-pull-requests-limit: 100
     registries: "*"
+    labels:
+      # We do not need changelogs because all dependencies are currently dev dependencies
+      - 🤖Skip Changelog
