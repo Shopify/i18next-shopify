@@ -4,7 +4,7 @@ function getDefaults() {
   return {};
 }
 
-const MUSTACHE_FORMAT = /{{\s*(\w+)\s*}}/g;
+const MUSTACHE_FORMAT = /{{?\s*(\w+)\s*}}?/g;
 
 class ShopifyFormat {
   constructor(options) {
