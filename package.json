@@ -34,7 +34,7 @@
     "@shopify/stylelint-plugin": "^11.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.7",
-    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest-dom": "^3.6.3",
