@@ -28,7 +28,7 @@
     "@changesets/cli": "^2.26.1",
     "@changesets/get-release-plan": "^3.0.16",
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@shopify/eslint-plugin": "^42.1.0",
     "@shopify/prettier-config": "^1.1.2",
     "@testing-library/jest-dom": "^5.11.6",
