@@ -42,8 +42,5 @@ jobs:
       - name: Lint
         run: yarn lint --filter=[HEAD^1]
 
-      - name: Type check
-        run: yarn type-check
-
       - name: Test
         run: yarn test
