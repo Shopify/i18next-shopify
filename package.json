@@ -57,17 +57,15 @@
     "rollup": "2.38.5",
     "rollup-plugin-terser": "7.0.2",
     "stylelint": "^14.15.0",
-    "typescript": "^4.6.3",
     "yargs": "17.7.1"
   },
   "jest": {
     "testEnvironment": "jsdom"
   },
   "scripts": {
-    "test": "tsc --noEmit && jest --coverage --runInBand --ci",
+    "test": "jest --coverage --runInBand --ci",
     "lint": "npm-run-all lint:eslint",
     "lint:eslint": "eslint . --max-warnings 0 --cache --cache-location '.cache/eslint'",
-    "type-check": "tsc --build",
     "tdd": "jest --watch",
     "clean": "rimraf dist && mkdirp dist && rimraf locale-data",
     "copy": "cp ./dist/umd/i18nextShopify.min.js ./i18nextShopify.min.js && cp ./dist/umd/i18nextShopify.js ./i18nextShopify.js",
