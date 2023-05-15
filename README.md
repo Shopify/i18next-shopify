@@ -3,14 +3,10 @@
 This package is an `i18nFormat` plugin for the [i18next](https://www.i18next.com/) library. It allows developers to use the same format used by Shopify [apps](https://shopify.dev/docs/apps/checkout/best-practices/localizing-ui-extensions#how-it-works) and [themes](https://shopify.dev/docs/themes/architecture/locales/storefront-locale-files#usage) for localization.
 
 ## Table of contents
-[Getting Started](#getting-started)
-
-[Example](#example)
-
-[License](#license)
-
-[Contributing](#contributing)
-
+[Getting Started](#getting-started)\
+[Example](#example)\
+[License](#license)\
+[Contributing](#contributing)\
 [References](#references)
 
 ## Getting started
