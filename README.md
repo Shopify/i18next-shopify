@@ -31,12 +31,14 @@ i18next.use(ShopifyFormat).init({
   lng: "en",
   resources: {
     en: {
-      hello: "Hello {{casual_name}}!",
-      products: {
-        "0": "I have no products.",
-        "1": "I have a single product.",
-        one: "I have {{count}} product.",
-        other: "I have {{count}} products.",
+      translation: {
+        hello: "Hello {{casual_name}}!",
+        products: {
+          "0": "I have no products.",
+          "1": "I have a single product.",
+          one: "I have {{count}} product.",
+          other: "I have {{count}} products.",
+        },
       },
     }
   }
