@@ -1,19 +1,6 @@
-import React from 'react';
-import areIntlLocalesSupported from 'intl-locales-supported';
 import i18next from 'i18next';
-import '@testing-library/jest-dom';
 
 import ShopifyFormat from '../src';
-
-if (global.Intl) {
-  if (!areIntlLocalesSupported(['en', 'ar-AR'])) {
-    const polyFill = require('intl');
-    Intl.NumberFormat = polyFill.NumberFormat;
-    Intl.DateTimeFormat = polyFill.DateTimeFormat;
-  }
-} else {
-  global.Intl = require('intl');
-}
 
 describe('shopify format', () => {
   describe('addLookupKeys', () => {

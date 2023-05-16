@@ -15,7 +15,7 @@ export function defaults(obj, ...args) {
   return obj;
 }
 
-export function polyFillIntl() {
+export function polyfillIntl() {
   try {
     if (global.Intl) {
       if (!Intl.NumberFormat || !Intl.DateTimeFormat) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import areIntlLocalesSupported from 'intl-locales-supported';
 import i18next from 'i18next';
 import {cleanup, render} from '@testing-library/react';
 import {renderHook} from '@testing-library/react-hooks';
@@ -7,16 +6,6 @@ import {initReactI18next, Trans, useTranslation} from 'react-i18next';
 import '@testing-library/jest-dom';
 
 import ShopifyFormat from '../src';
-
-if (global.Intl) {
-  if (!areIntlLocalesSupported(['en', 'ar-AR'])) {
-    const polyFill = require('intl');
-    Intl.NumberFormat = polyFill.NumberFormat;
-    Intl.DateTimeFormat = polyFill.DateTimeFormat;
-  }
-} else {
-  global.Intl = require('intl');
-}
 
 // eslint-disable-next-line react/prop-types
 function Link({to, children}) {
