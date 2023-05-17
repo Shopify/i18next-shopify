@@ -27,7 +27,7 @@ or
 $ yarn add @shopify/i18next-shopify
 ```
 
-### Configure i18next to use this plugin:
+### Configure i18next to use this plugin
 
 ```js
 import i18next from "i18next";
