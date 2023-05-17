@@ -63,9 +63,9 @@ class ShopifyFormat {
 
     if (needsPluralHandling) {
       if (!this.i18next.translator.pluralResolver.shouldUseIntlApi()) {
-        // eslint-disable-next-line no-warning-comments
-        // TODO: Figure out the proper way to handle this
-        throw new Error('We need that to exist');
+        throw new Error(
+          'Error: The application was unable to use the Intl API. This may be due to a missing or incomplete polyfill.',
+        );
       }
 
       // Shopify uses the "ordinal" interpolation for ordinal pluralization (i.e., {{ordinal}}), users will expect to
