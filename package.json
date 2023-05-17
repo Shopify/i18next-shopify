@@ -18,9 +18,6 @@
     "type": "git",
     "url": "https://github.com/Shopify/i18next-shopify"
   },
-  "peerDependencies": {
-    "intl": ">=1"
-  },
   "devDependencies": {
     "@babel/cli": "^7.15.0",
     "@babel/core": "^7.15.0",
@@ -75,5 +72,8 @@
   "author": "Michael Overmeyer <michael.overmeyer@shopify.com>",
   "contributors": [],
   "license": "MIT",
-  "lock": false
+  "lock": false,
+  "dependencies": {
+    "intl-pluralrules": "^2.0.0"
+  }
 }

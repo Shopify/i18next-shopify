@@ -14,20 +14,3 @@ export function defaults(obj, ...args) {
   });
   return obj;
 }
-
-export function polyfillIntl() {
-  try {
-    if (global.Intl) {
-      if (!Intl.NumberFormat || !Intl.DateTimeFormat) {
-        const polyFill = require('intl');
-        Intl.NumberFormat = polyFill.NumberFormat;
-        Intl.DateTimeFormat = polyFill.DateTimeFormat;
-      }
-    } else {
-      global.Intl = require('intl');
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
-}

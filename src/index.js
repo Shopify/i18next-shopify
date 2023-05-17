@@ -1,4 +1,5 @@
 import * as utils from './utils';
+import 'intl-pluralrules';
 
 function getDefaults() {
   return {};
@@ -9,8 +10,6 @@ const MUSTACHE_FORMAT = /{{?\s*(\w+)\s*}}?/g;
 class ShopifyFormat {
   constructor(options) {
     this.type = 'i18nFormat';
-
-    utils.polyfillIntl();
 
     this.init(null, options);
   }
