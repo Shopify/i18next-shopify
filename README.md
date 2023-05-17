@@ -82,7 +82,7 @@ Use a clear and descriptive title for the issue to identify the problem.
 The following is a list of useful commands and hits.
 - `yarn install` to install development dependencies
 - `yarn test` to run the test suite
-- `yarn tdd` to run tests after files are update
+- `yarn tdd` to run tests after files are updated
 - `yarn lint` to run the linter
 - `yarn changeset` to generate a changeset.
 - Open a PR with your contribution.  Fill out all applicable sections of the [PR template](https://github.com/Shopify/i18next-shopify/blob/main/.github/pull_request_template.md)
