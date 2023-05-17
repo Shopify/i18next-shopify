@@ -1,5 +1,4 @@
 import * as utils from './utils';
-import 'intl-pluralrules';
 
 function getDefaults() {
   return {};

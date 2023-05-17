@@ -72,8 +72,5 @@
   "author": "Michael Overmeyer <michael.overmeyer@shopify.com>",
   "contributors": [],
   "license": "MIT",
-  "lock": false,
-  "dependencies": {
-    "intl-pluralrules": "^2.0.0"
-  }
+  "lock": false
 }
