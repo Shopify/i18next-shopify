@@ -79,7 +79,7 @@ Use a clear and descriptive title for the issue to identify the problem.
 
 ### Contributing Code
 
-The following is a list of useful commands and hits.
+Useful commands:
 - `yarn install` to install development dependencies
 - `yarn test` to run the test suite
 - `yarn tdd` to run tests after files are updated
