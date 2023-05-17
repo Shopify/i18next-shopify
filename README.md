@@ -4,7 +4,7 @@ This package is an `i18nFormat` plugin for the [i18next](https://www.i18next.com
 
 Key features include:
 * String interpolation with both single `{}` and double `{{}}` curly brace mustache formats
-* Search nested locations for plural handling
+* Pluralization as nested keys
   * E.g. `{"keyWithCount": {"one": "value"}}` instead of `{"keyWithCount_one": "value"}`
 * Allow for the "ordinal" interpolation technique for ordinal pluralization
   * NOTE: An edge case to consider is when the `ordinal` value is explicitly set to 0 and `count` is provided. This plugin treats this as cardinal pluralization
