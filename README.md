@@ -2,7 +2,7 @@
 
 This package is an `i18nFormat` plugin for the [i18next](https://www.i18next.com/) library. It allows developers to use the same format used by Shopify [apps](https://shopify.dev/docs/apps/checkout/best-practices/localizing-ui-extensions#how-it-works) and [themes](https://shopify.dev/docs/themes/architecture/locales/storefront-locale-files#usage) for localization.
 
-Key features include
+Key features include:
 * String interpolation within both single and double curly brace mustache formats
 * Search nested locations for plural handling
   * E.g. `{"keyWithCount": {"one": "value"}}` instead of `{"keyWithCount_one": "value"}`
