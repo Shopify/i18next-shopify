@@ -29,6 +29,11 @@ $ yarn add @shopify/i18next-shopify
 
 ### Configure i18next to use this plugin
 
+> **Warning**
+> The [`Intl.PluralRules` API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules) is required for this plugin's plural handling.
+> If your target environments do not support this API, you may need to [polyfill](https://github.com/eemeli/intl-pluralrules) it.
+> This plugin's plural handling is not compatible with i18next's fallback to JSON format v3 plural handling.
+
 ```js
 import i18next from "i18next";
 import ShopifyFormat from "@shopify/i18next-shopify";
