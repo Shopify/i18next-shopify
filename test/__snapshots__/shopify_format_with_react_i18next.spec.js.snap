@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`shopify format with react-i18next handles interpolation of React components using Trans component with explicit component tags 1`] = `
+exports[`with react-i18next (Trans with interpolation) handles interpolation of React components using Trans component with explicit component tags 1`] = `
 <div>
   Hello 
   <strong
@@ -18,7 +18,7 @@ exports[`shopify format with react-i18next handles interpolation of React compon
 </div>
 `;
 
-exports[`shopify format with react-i18next handles interpolation of React components using Trans component with numbered component tags 1`] = `
+exports[`with react-i18next (Trans with interpolation) handles interpolation of React components using Trans component with numbered component tags 1`] = `
 <div>
   Hello 
   <strong
