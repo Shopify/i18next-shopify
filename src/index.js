@@ -53,7 +53,6 @@ class ShopifyFormat {
     return interpolated;
   }
 
-
   // Add any other locations that should be searched first for an answer to the lookup
   // Add keys to `finalKeys` in reverse order (e.g., least specific -> most specific)
   // Useful when defining keys for pluralization or other context cases (e.g., grammatical gender)

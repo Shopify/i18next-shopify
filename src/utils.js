@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-// Dynamically & Optionally import React.
+// Import React if it's available.
 let React;
 // eslint-disable-next-line promise/catch-or-return
 import('react')

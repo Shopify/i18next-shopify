@@ -36,6 +36,7 @@ const config = {
     nodeResolve({mainField: ['jsnext:main']}),
   ].concat(compress ? terser() : []),
   output,
+  inlineDynamicImports: true,
 };
 
 export default config;
