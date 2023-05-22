@@ -1,11 +1,9 @@
-/* eslint-disable prettier/prettier */
 // Import React if it's available.
 let React;
 // eslint-disable-next-line promise/catch-or-return
-import('react')
-  .then((module) => {
-    React = module;
-  })
+import('react').then((module) => {
+  React = module;
+});
 
 const arr = [];
 const each = arr.forEach;
@@ -25,10 +23,9 @@ export function defaults(obj, ...args) {
 }
 
 /**
- * Given a value that may contain interpolated values, replaces all occurrences of the specified text
- * with the specified replacement value, and returns a new value with the replacements made.
- * If React is available, this function supports nested interpolated values, allowing you to replace
- * text with React elements or arrays of React elements.
+ * Replaces all occurrences of the specified text. Returns a new value with the replacements made.
+ * If React is available, this function supports replacing text with React elements and replacing
+ * values within nested React elements and arrays.
  *
  * @param {string|object|Array} interpolated - The value to replace occurrences of the specified text in.
  * @param {string|RegExp} find - The text or regular expression to search for in the interpolated value.
@@ -59,14 +56,20 @@ export function replaceValue(interpolated, find, replace) {
     case 'object':
       if (Array.isArray(interpolated)) {
         // The interpolated element is an array, call replaceValue on each item
-        return interpolated.map((item) => replaceValue(item, find, replace)).flat();
+        return interpolated
+          .map((item) => replaceValue(item, find, replace))
+          .flat();
       }
 
       // The interpolated element is an object with props, check its children
       if (interpolated?.props) {
         let hasChanged = false;
 
-        const newChildren = replaceValue(interpolated.props.children, find, replace);
+        const newChildren = replaceValue(
+          interpolated.props.children,
+          find,
+          replace,
+        );
         if (newChildren !== interpolated.props.children) {
           hasChanged = true;
         }
