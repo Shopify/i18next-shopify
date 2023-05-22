@@ -17,27 +17,29 @@ describe('Utils', () => {
     });
 
     it('replaces a string with React elements', () => {
+      const span = React.createElement('span', {}, 'John');
+
       expect(
-        replaceValue('Hello, {{name}}!', '{{name}}', <span>John</span>),
+        replaceValue('Hello, {{name}}!', '{{name}}', span),
       ).toMatchSnapshot();
     });
 
     it('returns the original string when there is no match with given React elements', () => {
-      expect(
-        replaceValue('Hello, {{name}}!', '{{no_match}}', <span>John</span>),
-      ).toBe('Hello, {{name}}!');
+      const span = React.createElement('span', {}, 'John');
+
+      expect(replaceValue('Hello, {{name}}!', '{{no_match}}', span)).toBe(
+        'Hello, {{name}}!',
+      );
     });
 
     it('replaces a string within nested React elements', () => {
-      expect(
-        replaceValue(
-          <>
-            Hello there <span>{'{{name}}'}</span>
-          </>,
-          '{{name}}',
-          'John',
-        ),
-      ).toMatchSnapshot();
+      const span = React.createElement('span', {key: '1'}, '{{name}}');
+      const fragment = React.createElement(React.Fragment, {}, [
+        'Hello there ',
+        span,
+      ]);
+
+      expect(replaceValue(fragment, '{{name}}', 'John')).toMatchSnapshot();
     });
 
     it('replaces a string with a regular expression', () => {

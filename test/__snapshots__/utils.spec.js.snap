@@ -10,15 +10,6 @@ exports[`Utils replaceValue replaces a string with React elements 1`] = `
 </React.Fragment>
 `;
 
-exports[`Utils replaceValue replaces a string within React elements 1`] = `
-<React.Fragment>
-  Hello there 
-  <span>
-    John
-  </span>
-</React.Fragment>
-`;
-
 exports[`Utils replaceValue replaces a string within nested React elements 1`] = `
 <React.Fragment>
   Hello there 

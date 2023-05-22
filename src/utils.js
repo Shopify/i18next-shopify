@@ -47,13 +47,9 @@ export function replaceValue(interpolated, find, replace) {
       if (split.length !== 1 && typeof replace === 'object') {
         // Replace is an object. Return a React fragment with the replacement.
 
-        return (
-          <React.Fragment key={split[0]}>
-            {split[0]}
-            {replace}
-            {split[1]}
-          </React.Fragment>
-        );
+        const props = {key: `${split[0]}`};
+        const childNodes = [split[0], replace, split[1]];
+        return React.createElement(React.Fragment, props, ...childNodes);
       }
 
       // This is a simple text replacement.
