@@ -46,11 +46,13 @@ class ShopifyFormat {
           ? options.count || options.ordinal
           : options[interpolation_key];
       if (value !== undefined) {
-        interpolated = interpolated.replace(match, value);
+        interpolated = utils.replaceValue(interpolated, match, value);
       }
     });
+
     return interpolated;
   }
+
 
   // Add any other locations that should be searched first for an answer to the lookup
   // Add keys to `finalKeys` in reverse order (e.g., least specific -> most specific)
