@@ -24,42 +24,60 @@ export function defaults(obj, ...args) {
   return obj;
 }
 
-// Replace function that supports nested interpolated given React is available.
+/**
+ * Given a value that may contain interpolated values, replaces all occurrences of the specified text
+ * with the specified replacement value, and returns a new value with the replacements made.
+ * If React is available, this function supports nested interpolated values, allowing you to replace
+ * text with React elements or arrays of React elements.
+ *
+ * @param {string|object|Array} interpolated - The value to replace occurrences of the specified text in.
+ * @param {string|RegExp} find - The text or regular expression to search for in the interpolated value.
+ * @param {string|object|Array} replace - The value to replace occurrences of the specified text with.
+ * @returns {string|object|Array} A new value with the specified text replaced.
+ */
 export function replaceValue(interpolated, find, replace) {
-  if (!React || (typeof interpolated === 'string' && typeof replace !== 'object')) {
-      // React is unavailable or this is a simple text replacement.
+  if (!React) {
+    return interpolated.replace(find, replace);
+  }
+
+  switch (typeof interpolated) {
+    case 'string':
+      if (interpolated.includes(find) && typeof replace === 'object') {
+        // Replace is an object. Return a React fragment with the replacement.
+        const split = interpolated.split(find);
+        return (
+          <React.Fragment key={split[0]}>
+            {split[0]}
+            {replace}
+            {split[1]}
+          </React.Fragment>
+        );
+      }
+
+      // This is a simple text replacement.
       return interpolated.replace(find, replace);
 
-  } else if (typeof interpolated === 'string' && interpolated.includes(find)) {
-    // Replace is an object. Return a React fragment with the replacement.
-    const split = interpolated.split(find);
+    case 'object':
+      if (Array.isArray(interpolated)) {
+        // The interpolated element is an array, call replaceValue on each item
+        return interpolated.map((item) => replaceValue(item, find, replace)).flat();
+      }
 
-    return (
-      <React.Fragment key={split[0]}>
-        {split[0]}
-        {replace}
-        {split[1]}
-      </React.Fragment>
-    );
-  } else if (Array.isArray(interpolated)) {
-    // The interpolated element is an array, call replaceValue on each item
-    return interpolated.map((item) => replaceValue(item, find, replace)).flat();
-  } else if (
-    typeof interpolated === 'object' && interpolated?.props
-  ) {
-    // The interpolated element is an object with props, check its children
-    let hasChanged = false;
+      // The interpolated element is an object with props, check its children
+      if (interpolated?.props) {
+        let hasChanged = false;
 
-    const newChildren = replaceValue(interpolated.props.children, find, replace);
-    if (newChildren !== interpolated.props.children) {
-      hasChanged = true;
-    }
+        const newChildren = replaceValue(interpolated.props.children, find, replace);
+        if (newChildren !== interpolated.props.children) {
+          hasChanged = true;
+        }
 
-    return hasChanged
-      ? React.cloneElement(interpolated, {children: newChildren})
-      : interpolated;
-  } else {
-    // The interpolated element is something else, just return it
-    return interpolated;
+        return hasChanged
+          ? React.cloneElement(interpolated, {children: newChildren})
+          : interpolated;
+      }
   }
+
+  // The interpolated element is something else, just return it
+  return interpolated;
 }
