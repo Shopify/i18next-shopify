@@ -45,9 +45,7 @@ export function replaceValue(interpolated, find, replace) {
     // The interpolated element is an array, call replaceValue on each item
     return interpolated.map((item) => replaceValue(item, find, replace)).flat();
   } else if (
-    typeof interpolated === 'object' &&
-    interpolated !== null &&
-    interpolated.props !== undefined
+    typeof interpolated === 'object' && interpolated?.props
   ) {
     // The interpolated element is an object with props, check its children
     let hasChanged = false;
