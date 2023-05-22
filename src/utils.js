@@ -41,10 +41,12 @@ export function replaceValue(interpolated, find, replace) {
   }
 
   switch (typeof interpolated) {
-    case 'string':
-      if (interpolated.includes(find) && typeof replace === 'object') {
+    case 'string': {
+      const split = interpolated.split(find);
+
+      if (split.length !== 1 && typeof replace === 'object') {
         // Replace is an object. Return a React fragment with the replacement.
-        const split = interpolated.split(find);
+
         return (
           <React.Fragment key={split[0]}>
             {split[0]}
@@ -56,6 +58,7 @@ export function replaceValue(interpolated, find, replace) {
 
       // This is a simple text replacement.
       return interpolated.replace(find, replace);
+    }
 
     case 'object':
       if (Array.isArray(interpolated)) {
