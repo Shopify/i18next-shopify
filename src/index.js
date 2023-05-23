@@ -49,7 +49,6 @@ class ShopifyFormat {
         interpolated = utils.replaceValue(interpolated, match, value);
       }
     });
-
     return interpolated;
   }
 

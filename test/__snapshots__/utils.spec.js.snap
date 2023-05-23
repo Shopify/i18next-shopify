@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Utils replaceValue replaces a string with React elements 1`] = `
-<React.Fragment>
-  Hello, 
+[
+  "Hello, ",
   <span>
     John
-  </span>
-  !
-</React.Fragment>
+  </span>,
+  "!",
+]
 `;
 
 exports[`Utils replaceValue replaces a string within nested React elements 1`] = `

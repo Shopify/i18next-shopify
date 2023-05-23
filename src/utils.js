@@ -1,10 +1,3 @@
-// Import React if it's available.
-let React;
-// eslint-disable-next-line promise/catch-or-return
-import('react').then((module) => {
-  React = module;
-});
-
 const arr = [];
 const each = arr.forEach;
 
@@ -29,54 +22,53 @@ export function defaults(obj, ...args) {
  *
  * @param {string|object|Array} interpolated - The value to replace occurrences of the specified text in.
  * @param {string|RegExp} find - The text or regular expression to search for in the interpolated value.
- * @param {string|object|Array} replace - The value to replace occurrences of the specified text with.
+ * @param {string|object|Array} replacement - The value to replace occurrences of the specified text with.
  * @returns {string|object|Array} A new value with the specified text replaced.
  */
-export function replaceValue(interpolated, find, replace) {
-  if (!React) {
-    return interpolated.replace(find, replace);
-  }
-
+export function replaceValue(interpolated, find, replacement) {
   switch (typeof interpolated) {
     case 'string': {
       const split = interpolated.split(find);
 
-      if (split.length !== 1 && typeof replace === 'object') {
-        // Replace is an object. Return a React fragment with the replacement.
+      if (split.length !== 1 && typeof replacement === 'object') {
+        // Interpolated includes find and replacement is likely a React element. Return array w/ the replacement.
 
-        const props = {key: `${split[0]}`};
-        const childNodes = [split[0], replace, split[1]];
-        return React.createElement(React.Fragment, props, ...childNodes);
+        // React elements within arrays need a key prop.
+        if (!replacement.key) {
+          // eslint-disable-next-line no-param-reassign
+          replacement = {...replacement, key: `${split[0]}`};
+        }
+
+        return [split[0], replacement, split[1]].flat();
       }
 
-      // This is a simple text replacement.
-      return interpolated.replace(find, replace);
+      // interpolated and find are primitives, Use native replace function.
+      return interpolated.replace(find, replacement);
     }
 
     case 'object':
       if (Array.isArray(interpolated)) {
-        // The interpolated element is an array, call replaceValue on each item
         return interpolated
-          .map((item) => replaceValue(item, find, replace))
+          .map((item) => replaceValue(item, find, replacement))
           .flat();
       }
 
-      // The interpolated element is an object with props, check its children
-      if (interpolated?.props) {
-        let hasChanged = false;
-
+      // Check if the interpolated object may be a React element w/ children.
+      if (interpolated?.props?.children) {
         const newChildren = replaceValue(
           interpolated.props.children,
           find,
-          replace,
+          replacement,
         );
-        if (newChildren !== interpolated.props.children) {
-          hasChanged = true;
-        }
 
-        return hasChanged
-          ? React.cloneElement(interpolated, {children: newChildren})
-          : interpolated;
+        if (newChildren !== interpolated.props.children) {
+          // The following intends be relatively equivalent to
+          // return React.cloneElement(interpolated, {children: newChildren});
+          return {
+            ...interpolated,
+            props: {...interpolated.props, children: newChildren},
+          };
+        }
       }
   }
 
