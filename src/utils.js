@@ -17,39 +17,40 @@ export function defaults(obj, ...args) {
 
 /**
  * Replaces all occurrences of the specified text. Returns a new value with the replacements made.
- * If React is available, this function supports replacing text with React elements and replacing
- * values within nested React elements and arrays.
+ * This function supports replacing text with React elements and support replacing values within
+ * nested React elements/arrays.
  *
  * @param {string|object|Array} interpolated - The value to replace occurrences of the specified text in.
- * @param {string|RegExp} find - The text or regular expression to search for in the interpolated value.
+ * @param {string|RegExp} pattern - The text or regular expression to search for in the interpolated value.
  * @param {string|object|Array} replacement - The value to replace occurrences of the specified text with.
  * @returns {string|object|Array} A new value with the specified text replaced.
  */
-export function replaceValue(interpolated, find, replacement) {
+export function replaceValue(interpolated, pattern, replacement) {
   switch (typeof interpolated) {
     case 'string': {
-      const split = interpolated.split(find);
-
+      const split = interpolated.split(pattern);
+      // Check if interpolated includes pattern
+      //  && if String.prototype.replace wouldn't work because replacement is an object like a React element.
       if (split.length !== 1 && typeof replacement === 'object') {
-        // Interpolated includes find and replacement is likely a React element. Return array w/ the replacement.
+        // Return array w/ the replacement
 
-        // React elements within arrays need a key prop.
+        // React elements within arrays need a key prop
         if (!replacement.key) {
           // eslint-disable-next-line no-param-reassign
-          replacement = {...replacement, key: `${split[0]}`};
+          replacement = {...replacement, key: pattern.toString()};
         }
 
         return [split[0], replacement, split[1]].flat();
       }
 
-      // interpolated and find are primitives, Use native replace function.
-      return interpolated.replace(find, replacement);
+      // interpolated and replacement are primitives
+      return interpolated.replace(pattern, replacement);
     }
 
     case 'object':
       if (Array.isArray(interpolated)) {
         return interpolated
-          .map((item) => replaceValue(item, find, replacement))
+          .map((item) => replaceValue(item, pattern, replacement))
           .flat();
       }
 
@@ -57,13 +58,11 @@ export function replaceValue(interpolated, find, replacement) {
       if (interpolated?.props?.children) {
         const newChildren = replaceValue(
           interpolated.props.children,
-          find,
+          pattern,
           replacement,
         );
 
         if (newChildren !== interpolated.props.children) {
-          // The following intends be relatively equivalent to
-          // return React.cloneElement(interpolated, {children: newChildren});
           return {
             ...interpolated,
             props: {...interpolated.props, children: newChildren},
