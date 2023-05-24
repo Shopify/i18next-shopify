@@ -381,13 +381,22 @@ describe('with react-i18next (Trans with interpolation)', () => {
                 other:
                   'Hello <Name>{{name}}</Name>, you have {{count}} unread messages. <MessagesLink>Go to messages</MessagesLink>.',
               },
+              userMessagesUnreadSimple: {
+                one: 'Hello {{name}}, you have {{count}} unread message. {{messageLink}}',
+                other:
+                  'Hello {{name}}, you have {{count}} unread messages. {{messageLink}}',
+              },
+              messageLinkText: {
+                one: 'Go to message.',
+                other: 'Go to messages.',
+              },
             },
           },
         },
       });
   });
 
-  it('handles interpolation of React components', () => {
+  it('handles interpolation of React components using Trans component with numbered component tags', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
@@ -410,7 +419,7 @@ describe('with react-i18next (Trans with interpolation)', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('handles interpolation of React components using explicit components', () => {
+  it('handles interpolation of React components using Trans component with explicit component tags', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
@@ -430,6 +439,34 @@ describe('with react-i18next (Trans with interpolation)', () => {
             MessagesLink: <Link to="/msgs" />,
           }}
         />
+      );
+    };
+
+    const {container} = render(<MyComponent />);
+    expect(container).toHaveTextContent(
+      'Hello Joe, you have 1 unread message. Go to message.',
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('handles interpolation of React components using t() function with React components passed as interpolation variables', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    const MyComponent = () => {
+      const count = 1;
+      const name = 'Joe';
+
+      return (
+        <>
+          {t('userMessagesUnreadSimple', {
+            count,
+            name: <strong title={t('nameTitle')}>{name}</strong>,
+            messageLink: (
+              <Link to="/msgs">{t('messageLinkText', {count})}</Link>
+            ),
+          })}
+        </>
       );
     };
 

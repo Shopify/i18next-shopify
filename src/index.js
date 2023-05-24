@@ -46,7 +46,7 @@ class ShopifyFormat {
           ? options.count || options.ordinal
           : options[interpolation_key];
       if (value !== undefined) {
-        interpolated = interpolated.replace(match, value);
+        interpolated = utils.replaceValue(interpolated, match, value);
       }
     });
     return interpolated;
