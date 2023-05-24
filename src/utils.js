@@ -17,7 +17,7 @@ export function defaults(obj, ...args) {
 
 /**
  * Replaces all occurrences of the specified text. Returns a new value with the replacements made.
- * This function supports replacing text with React elements and support replacing values within
+ * This function supports replacing text with React elements and replacing values within
  * nested React elements/arrays.
  *
  * @param {string|object|Array} interpolated - The value to replace occurrences of the specified text in.
