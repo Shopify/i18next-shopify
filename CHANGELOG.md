@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.0
+
+### Minor Changes
+
+- 3d725cb: Support t() with components passed as interpolation variables
+
 ## 0.1.1
 
 ### Patch Changes
