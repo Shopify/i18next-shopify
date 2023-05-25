@@ -3,9 +3,11 @@
 This package is an `i18nFormat` plugin for the [i18next](https://www.i18next.com/) library. It allows developers to use the same format used by Shopify [apps](https://shopify.dev/docs/apps/checkout/best-practices/localizing-ui-extensions#how-it-works) and [themes](https://shopify.dev/docs/themes/architecture/locales/storefront-locale-files#usage) for localization.
 
 Key features include:
-* String interpolation with both single `{}` and double `{{}}` curly brace mustache formats
+* Variable interpolation with both single `{}` and double `{{}}` curly brace mustache formats
 * Pluralization as nested keys
-  * E.g. `{"keyWithCount": {"one": "value"}}` instead of `{"keyWithCount_one": "value"}`
+  * E.g. `{ "keyWithCount": { "one": "value" } }` instead of `{ "keyWithCount_one": "value" }`
+* Variable interpolation with React components as replacement values
+  * E.g. `t("key", { businessName: <strong>Shopify</strong> })`
 * Ordinal pluralization using the interpolation variable `ordinal` as number (e.g. `t("key", { ordinal: 1 })`) or using the interpolation variable `ordinal` as boolean and `count` as number (e.g. `t("key", { ordinal: true, count: 1 })`)
   * NOTE: When `ordinal` is explicitly set to `0` and `count` is also explicitly set, the plugin will treat this as cardinal pluralization (e.g. `t("key", { count: 1, ordinal: 0 }`))
 
@@ -52,7 +54,7 @@ i18next.use(ShopifyFormat).init({
   resources: {
     en: {
       translation: {
-        hello: "Hello {{casual_name}}!",
+        hello: "Hello {{casualName}}!",
         products: {
           "0": "I have no products.",
           "1": "I have a single product.",
@@ -64,7 +66,7 @@ i18next.use(ShopifyFormat).init({
   }
 });
 
-i18next.t("hello", { casual_name: "Shopify" }); // -> Hello Shopify!
+i18next.t("hello", { casualName: "Shopify" }); // -> Hello Shopify!
 i18next.t("products", { count: 2 }); // -> I have 2 products!
 ```
 
