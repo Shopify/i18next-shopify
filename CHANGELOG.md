@@ -1,5 +1,12 @@
 # Changelogg
 
+## 0.2.1
+
+### Patch Changes
+
+- e2d24a5: Fixes main field in package.json for TypeScript and bundlers
+- 3a0b1eb: Add support for typescript declaration
+
 ## 0.2.0
 
 ### Minor Changes
