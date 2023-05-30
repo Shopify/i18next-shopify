@@ -4,6 +4,7 @@
   "description": "i18nFormat plugin to use Shopify's translation format with i18next",
   "main": "./index.js",
   "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
   "keywords": [
     "i18next",
     "i18next-format"
