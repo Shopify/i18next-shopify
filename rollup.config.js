@@ -1,6 +1,7 @@
 import babel from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import copy from 'rollup-plugin-copy';
 import {argv} from 'yargs';
 
 const compress = argv.compact;
@@ -34,6 +35,7 @@ const config = {
   plugins: [
     babel(babelOptions),
     nodeResolve({mainField: ['jsnext:main']}),
+    copy({targets: [{src: './index.d.ts', dest: 'dist/types'}]}),
   ].concat(compress ? terser() : []),
   output,
 };
