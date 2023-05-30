@@ -9,3 +9,4 @@ coverage/*
 /i18nextShopify.js
 /i18nextShopify.min.js
 /index.js
+/index.d.ts
