@@ -15,10 +15,7 @@
   },
   "homepage": "https://github.com/Shopify/i18next-shopify",
   "bugs": "https://github.com/Shopify/i18next-shopify/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Shopify/i18next-shopify"
-  },
+  "repository": "https://github.com/Shopify/i18next-shopify",
   "devDependencies": {
     "@babel/cli": "^7.15.0",
     "@babel/core": "^7.15.0",
