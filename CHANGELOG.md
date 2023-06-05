@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.2
+
+### Patch Changes
+
+- cc93dce: Update repository field in package.config to resolve issues with DependaBot in consuming repositories.
+
 ## 0.2.1
 
 ### Patch Changes
