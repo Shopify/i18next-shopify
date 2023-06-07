@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.3
+
+### Patch Changes
+
+- b4637b5: Revert update to repository field in package.json
+
 ## 0.2.2
 
 ### Patch Changes
