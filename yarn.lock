@@ -3980,9 +3980,9 @@ human-signals@^4.3.0:
   integrity sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==
 
 i18next@^23.1.0:
-  version "23.2.9"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.9.tgz#77a3ce9261b757c35b001e96e94cb0b57848e8df"
-  integrity sha512-Fb5Bdj3NGQKMed9Z/kmaxYP9yVFm+rFwX+re3o98ooZc0gKXLU6Q8IOUarFIs47ajpSEM+s3kdNb57Nm2wm3FA==
+  version "23.2.10"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.10.tgz#a9db1aaf84d8853da402888c837aeaf8fa7f71e2"
+  integrity sha512-oVFO06H/njXpvLfXDjlAX3LN8VMMhMn1I8wl+EzJqcMtRW0Glc6apy9mtmOq3AnA2QBPAFMvxIfkdlLFqGKKLw==
   dependencies:
     "@babel/runtime" "^7.22.5"
 
