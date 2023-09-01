@@ -1,6 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {renderHook} from '@testing-library/react-hooks';
 import {initReactI18next, Trans, useTranslation} from 'react-i18next';
 import '@testing-library/jest-dom';
@@ -167,7 +167,6 @@ describe('shopify format with react-i18next (t)', () => {
 
 describe('with react-i18next (Trans)', () => {
   beforeEach(() => {
-    cleanup();
     i18next
       .use(initReactI18next)
       .use(ShopifyFormat)
@@ -357,7 +356,6 @@ describe('with react-i18next (Trans)', () => {
 
 describe('with react-i18next (Trans with interpolation)', () => {
   beforeEach(() => {
-    cleanup();
     i18next
       .use(ShopifyFormat)
       .use(initReactI18next)
