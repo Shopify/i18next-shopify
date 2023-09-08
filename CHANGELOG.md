@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.4
+
+### Patch Changes
+
+- 75ba1dc: Allow t() to accept returnObjects: true
+
 ## 0.2.3
 
 ### Patch Changes
