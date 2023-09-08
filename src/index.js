@@ -32,6 +32,11 @@ class ShopifyFormat {
   parse(res, options) {
     // const hadSuccessfulLookup = info && info.resolved && info.resolved.res;
 
+    // returnObjects parameter can cause objects to be resolved, rather than a single string
+    if (typeof res === 'object') {
+      return res;
+    }
+
     // Interpolations
     const matches = res.match(MUSTACHE_FORMAT);
     if (!matches) {

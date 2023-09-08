@@ -44,6 +44,9 @@ describe('shopify format with react-i18next (t)', () => {
                   other: 'This is my {{ordinal}}th car',
                 },
               },
+              nested_level_1: {
+                nested_level_2: 'Nested content',
+              },
             },
           },
         },
@@ -162,6 +165,15 @@ describe('shopify format with react-i18next (t)', () => {
         ordinal: 2,
       }),
     ).toBe('This is my 2st car');
+  });
+
+  it('handles returnObjects: true', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    expect(t('nested_level_1', {returnObjects: true})).toStrictEqual({
+      nested_level_2: 'Nested content',
+    });
   });
 });
 
