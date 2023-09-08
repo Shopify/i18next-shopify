@@ -167,6 +167,22 @@ describe('shopify format with react-i18next (t)', () => {
     ).toBe('This is my 2st car');
   });
 
+  it('handles null and undefined keys', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    expect(
+      t('string_with_single_mustache', {
+        name: null,
+      }),
+    ).toBe('Hello !');
+    expect(
+      t('string_with_single_mustache', {
+        name: undefined,
+      }),
+    ).toBe('Hello !');
+  });
+
   it('handles returnObjects: true', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
@@ -415,7 +431,7 @@ describe('with react-i18next (Trans with interpolation)', () => {
       const count = 1;
 
       return (
-        <Trans i18nKey="userMessagesUnread" count={count}>
+        <Trans i18nKey="userMessagesUnread" count={count} values={{name}}>
           Hello <strong title={t('nameTitle')}>{{name}}</strong>, you have{' '}
           {{count}} unread message. <Link to="/msgs">Go to messages</Link>.
         </Trans>
