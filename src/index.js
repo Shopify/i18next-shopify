@@ -60,9 +60,7 @@ class ShopifyFormat {
         );
       }
 
-      if (value !== undefined) {
-        interpolated = utils.replaceValue(interpolated, match, value);
-      }
+      interpolated = utils.replaceValue(interpolated, match, value ?? '');
     });
     return interpolated;
   }
