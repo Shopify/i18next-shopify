@@ -47,15 +47,17 @@ class ShopifyFormat {
     matches.forEach((match) => {
       const interpolation_key = match.replace(MUSTACHE_FORMAT, '$1');
 
-      let value;
-      if (interpolation_key === 'ordinal') {
-        value = options.count || options.ordinal;
-      } else if (interpolation_key === 'count') {
+      let value =
+        interpolation_key === 'ordinal'
+          ? options.count || options.ordinal
+          : options[interpolation_key];
+
+      // Cardinal and Ordinal pluralizations should be formatted according to their locale
+      // eg. "1,234,567th" instead of "1234567th"
+      if (interpolation_key === 'ordinal' || interpolation_key === 'count') {
         value = new Intl.NumberFormat(this.i18next.resolvedLanguage).format(
-          options[interpolation_key],
+          value,
         );
-      } else {
-        value = options[interpolation_key];
       }
 
       if (value !== undefined) {

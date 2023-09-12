@@ -246,6 +246,12 @@ describe('shopify format', () => {
       ).toBe('This is my 4th car');
     });
 
+    it('formats ordinal pluralization according to locale format', () => {
+      expect(
+        i18next.t('ordinal_pluralization', {count: 5000, ordinal: true}),
+      ).toBe('This is my 5,000th car');
+    });
+
     it('handles ordinal pluralization lookups (using ordinal: <number>)', () => {
       expect(i18next.t('ordinal_pluralization', {ordinal: 1})).toBe(
         'This is my 1st car',
