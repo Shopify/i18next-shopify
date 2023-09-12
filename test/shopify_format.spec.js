@@ -205,6 +205,12 @@ describe('shopify format', () => {
       );
     });
 
+    it('formats cardinal pluralization according to locale format', () => {
+      expect(i18next.t('cardinal_pluralization', {count: 5000})).toBe(
+        'I have 5,000 cars.',
+      );
+    });
+
     it('falls back to the `other` key if the proper cardinal pluralization key is missing', () => {
       expect(
         // A count of 1 in `en` should use the `one` key, but it's missing.

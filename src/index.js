@@ -46,10 +46,18 @@ class ShopifyFormat {
     let interpolated = res;
     matches.forEach((match) => {
       const interpolation_key = match.replace(MUSTACHE_FORMAT, '$1');
-      const value =
-        interpolation_key === 'ordinal'
-          ? options.count || options.ordinal
-          : options[interpolation_key];
+
+      let value;
+      if (interpolation_key === 'ordinal') {
+        value = options.count || options.ordinal;
+      } else if (interpolation_key === 'count') {
+        value = new Intl.NumberFormat(this.i18next.resolvedLanguage).format(
+          options[interpolation_key],
+        );
+      } else {
+        value = options[interpolation_key];
+      }
+
       if (value !== undefined) {
         interpolated = utils.replaceValue(interpolated, match, value);
       }
