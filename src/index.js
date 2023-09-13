@@ -63,7 +63,11 @@ class ShopifyFormat {
 
       // Cardinal and Ordinal pluralizations should be formatted according to their locale
       // eg. "1,234,567th" instead of "1234567th"
-      if (interpolation_key === 'ordinal' || interpolation_key === 'count') {
+      // However `count` and `ordinal` can also be used as a non-plural variable
+      if (
+        (interpolation_key === 'ordinal' || interpolation_key === 'count') &&
+        typeof value === 'number'
+      ) {
         value = new Intl.NumberFormat(this.i18next.resolvedLanguage).format(
           value,
         );
