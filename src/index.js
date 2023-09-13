@@ -46,10 +46,20 @@ class ShopifyFormat {
     let interpolated = res;
     matches.forEach((match) => {
       const interpolation_key = match.replace(MUSTACHE_FORMAT, '$1');
-      const value =
+
+      let value =
         interpolation_key === 'ordinal'
           ? options.count || options.ordinal
           : options[interpolation_key];
+
+      // Cardinal and Ordinal pluralizations should be formatted according to their locale
+      // eg. "1,234,567th" instead of "1234567th"
+      if (interpolation_key === 'ordinal' || interpolation_key === 'count') {
+        value = new Intl.NumberFormat(this.i18next.resolvedLanguage).format(
+          value,
+        );
+      }
+
       interpolated = utils.replaceValue(interpolated, match, value ?? '');
     });
     return interpolated;
