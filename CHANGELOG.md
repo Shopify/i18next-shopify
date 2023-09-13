@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.6
+
+### Patch Changes
+
+- a46504b: Interpolation when returnObjects:true
+
 ## 0.2.5
 
 ### Patch Changes
