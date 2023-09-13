@@ -1,6 +1,6 @@
 {
   "name": "@shopify/i18next-shopify",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "i18nFormat plugin to use Shopify's translation format with i18next",
   "main": "./dist/commonjs/index.js",
   "module": "dist/es/index.js",

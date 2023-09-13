@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.7
+
+### Patch Changes
+
+- 197a10a: Only format count/ordinal as number if they are one
+
 ## 0.2.6
 
 ### Patch Changes
