@@ -47,6 +47,10 @@ describe('shopify format with react-i18next (t)', () => {
               nested_level_1: {
                 nested_level_2: 'Nested content',
               },
+              nested_with_params: {
+                formal_greeting: 'Greetings {name}',
+                informal_greeting: 'Sup {name}',
+              },
             },
           },
         },
@@ -189,6 +193,18 @@ describe('shopify format with react-i18next (t)', () => {
 
     expect(t('nested_level_1', {returnObjects: true})).toStrictEqual({
       nested_level_2: 'Nested content',
+    });
+  });
+
+  it('handles nested interpolation with returnObjects: true', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    expect(
+      t('nested_with_params', {name: 'Joe', returnObjects: true}),
+    ).toStrictEqual({
+      formal_greeting: 'Greetings Joe',
+      informal_greeting: 'Sup Joe',
     });
   });
 });
