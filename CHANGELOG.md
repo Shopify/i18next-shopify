@@ -1,5 +1,12 @@
 # Changelogg
 
+## 0.2.5
+
+### Patch Changes
+
+- f5326a4: Supports formatting of count and ordinal values as numbers
+- 00a310d: Allows null and undefined key behaviour to match i18next
+
 ## 0.2.4
 
 ### Patch Changes
