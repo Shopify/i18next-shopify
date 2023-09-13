@@ -144,6 +144,7 @@ describe('shopify format', () => {
                 'Hello {{casual_name}}! Today is {{date}}.',
               string_with_repeated_interpolation:
                 'Hello {{casual_name}}! Hello {{casual_name}}!',
+              non_plural_count: 'The count is {count}.',
               cardinal_pluralization: {
                 0: 'I have no cars.',
                 one: 'I have {{count}} car.',
@@ -208,6 +209,12 @@ describe('shopify format', () => {
     it('formats cardinal pluralization according to locale format', () => {
       expect(i18next.t('cardinal_pluralization', {count: 5000})).toBe(
         'I have 5,000 cars.',
+      );
+    });
+
+    it('does not format count as plural if passed as string', () => {
+      expect(i18next.t('non_plural_count', {count: '5_000'})).toBe(
+        'The count is 5_000.',
       );
     });
 
