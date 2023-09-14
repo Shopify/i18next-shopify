@@ -1,5 +1,12 @@
 # Changelogg
 
+## 0.2.8
+
+### Patch Changes
+
+- cf07b33: Don't break objects when inserting key prop
+- cf07b33: Only format count/ordinal as number if they are one
+
 ## 0.2.7
 
 ### Patch Changes
