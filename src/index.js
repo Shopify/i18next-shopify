@@ -49,6 +49,7 @@ class ShopifyFormat {
     // Interpolations
     const matches = res.match(MUSTACHE_FORMAT);
     if (!matches) {
+      console.log({res, options});
       return res;
     }
 

@@ -51,6 +51,7 @@ describe('shopify format with react-i18next (t)', () => {
                 formal_greeting: 'Greetings {name}',
                 informal_greeting: 'Sup {name}',
               },
+              percent: "{{val, number(style: 'percent')}}",
             },
           },
         },
@@ -206,6 +207,13 @@ describe('shopify format with react-i18next (t)', () => {
       formal_greeting: 'Greetings Joe',
       informal_greeting: 'Sup Joe',
     });
+  });
+
+  it.only('handles custom formatting functions', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    expect(t('percent', {val: 0.5})).toBe('50%');
   });
 });
 
