@@ -1,3 +1,5 @@
+const {isValidElement, cloneElement} = require('react');
+
 const arr = [];
 const each = arr.forEach;
 
@@ -34,10 +36,9 @@ export function replaceValue(interpolated, pattern, replacement) {
       if (split.length !== 1 && typeof replacement === 'object') {
         // Return array w/ the replacement
 
-        // React elements within arrays need a key prop
-        if (!replacement.key) {
+        if (!replacement.key && isValidElement(replacement)) {
           // eslint-disable-next-line no-param-reassign
-          replacement = {...replacement, key: pattern.toString()};
+          replacement = cloneElement(replacement, {key: pattern.toString()});
         }
 
         return [split[0], replacement, split[1]].flat();

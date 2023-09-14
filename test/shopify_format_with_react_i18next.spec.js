@@ -207,6 +207,29 @@ describe('shopify format with react-i18next (t)', () => {
       informal_greeting: 'Sup Joe',
     });
   });
+
+  it('matches expect.anything() in interpolated variables', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+
+    expect(
+      t('string_with_single_mustache', {
+        name: <strong>Joe</strong>,
+      }),
+    ).toStrictEqual(
+      t('string_with_single_mustache', {name: expect.anything()}),
+    );
+  });
+
+  it('accepts arrays as interpolated variables', () => {
+    const {result} = renderHook(() => useTranslation('translation'));
+    const {t} = result.current;
+    expect(
+      t('string_with_single_mustache', {
+        name: ['Joe', 'Jane'],
+      }),
+    ).toStrictEqual(['Hello ', 'Joe', 'Jane', '!']);
+  });
 });
 
 describe('with react-i18next (Trans)', () => {
