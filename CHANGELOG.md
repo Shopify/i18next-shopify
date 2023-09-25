@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.9
+
+### Patch Changes
+
+- 62e9ba6: Resolve Vite production issues by replacing `require` statement with `import`
+
 ## 0.2.8
 
 ### Patch Changes
