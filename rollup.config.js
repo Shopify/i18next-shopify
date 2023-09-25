@@ -38,6 +38,7 @@ const config = {
     copy({targets: [{src: './index.d.ts', dest: 'dist/types'}]}),
   ].concat(compress ? terser() : []),
   output,
+  external: ['react'],
 };
 
 export default config;
