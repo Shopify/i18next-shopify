@@ -1,4 +1,4 @@
-const {isValidElement, cloneElement} = require('react');
+import {isValidElement, cloneElement} from 'react';
 
 const arr = [];
 const each = arr.forEach;
