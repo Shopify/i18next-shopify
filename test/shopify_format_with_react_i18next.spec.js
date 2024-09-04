@@ -214,7 +214,7 @@ describe('shopify format with react-i18next (t)', () => {
 
     expect(
       t('string_with_single_mustache', {
-        name: <strong>Joe</strong>,
+        name: <strong>{t('string')}</strong>,
       }),
     ).toStrictEqual(
       t('string_with_single_mustache', {name: expect.anything()}),
@@ -470,10 +470,12 @@ describe('with react-i18next (Trans with interpolation)', () => {
       const count = 1;
 
       return (
+        /* eslint-disable @shopify/jsx-no-hardcoded-content */
         <Trans i18nKey="userMessagesUnread" count={count} values={{name}}>
           Hello <strong title={t('nameTitle')}>{{name}}</strong>, you have{' '}
           {{count}} unread message. <Link to="/msgs">Go to messages</Link>.
         </Trans>
+        /* eslint-enable @shopify/jsx-no-hardcoded-content */
       );
     };
 
@@ -481,7 +483,7 @@ describe('with react-i18next (Trans with interpolation)', () => {
     expect(container).toHaveTextContent(
       'Hello Joe, you have 1 unread message. Go to message.',
     );
-    expect(container).toMatchSnapshot();
+    expect(container).toMatchSnapshot(); // eslint-disable-line @shopify/jest-no-snapshots
   });
 
   it('handles interpolation of React components using Trans component with explicit component tags', () => {
@@ -511,7 +513,7 @@ describe('with react-i18next (Trans with interpolation)', () => {
     expect(container).toHaveTextContent(
       'Hello Joe, you have 1 unread message. Go to message.',
     );
-    expect(container).toMatchSnapshot();
+    expect(container).toMatchSnapshot(); // eslint-disable-line @shopify/jest-no-snapshots
   });
 
   it('handles interpolation of React components using t() function with React components passed as interpolation variables', () => {
@@ -539,6 +541,6 @@ describe('with react-i18next (Trans with interpolation)', () => {
     expect(container).toHaveTextContent(
       'Hello Joe, you have 1 unread message. Go to message.',
     );
-    expect(container).toMatchSnapshot();
+    expect(container).toMatchSnapshot(); // eslint-disable-line @shopify/jest-no-snapshots
   });
 });

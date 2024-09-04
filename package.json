@@ -32,7 +32,7 @@
     "@changesets/get-release-plan": "^4.0.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.0.2",
-    "@shopify/eslint-plugin": "^44.0.0",
+    "@shopify/eslint-plugin": "^46.0.0",
     "@shopify/prettier-config": "^1.1.2",
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^12.1.5",
@@ -80,5 +80,8 @@
   "contributors": [],
   "license": "MIT",
   "lock": false,
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "globals": "^15.9.0"
+  }
 }

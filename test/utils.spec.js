@@ -21,7 +21,7 @@ describe('Utils', () => {
 
       expect(
         replaceValue('Hello, {{name}}!', '{{name}}', span),
-      ).toMatchSnapshot();
+      ).toMatchSnapshot(); // eslint-disable-line @shopify/jest-no-snapshots
     });
 
     it('returns the original string when there is no match with given React elements', () => {
@@ -39,7 +39,7 @@ describe('Utils', () => {
         span,
       ]);
 
-      expect(replaceValue(fragment, '{{name}}', 'John')).toMatchSnapshot();
+      expect(replaceValue(fragment, '{{name}}', 'John')).toMatchSnapshot(); // eslint-disable-line @shopify/jest-no-snapshots
     });
 
     it('replaces a string with a regular expression', () => {
