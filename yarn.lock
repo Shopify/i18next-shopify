@@ -2060,7 +2060,7 @@
     "@typescript-eslint/types" "7.18.0"
     "@typescript-eslint/typescript-estree" "7.18.0"
 
-"@typescript-eslint/utils@^5.58.0":
+"@typescript-eslint/utils@^5.62.0":
   version "5.62.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.62.0.tgz#141e809c71636e4a75daa39faed2fb5f4b10df86"
   integrity sha512-n8oxjeb5aIbPFEtmQxQYOLI0i9n5ySBEY/ZEHHZqKQSFnxio1rv6dthascc9dLuwrL0RC5mPCxB7vnAVGAYWAQ==
@@ -3390,11 +3390,11 @@ eslint-plugin-sort-class-members@^1.20.0:
   integrity sha512-xNaik4GQ/pRwd1soIVI28HEXZbrWoLR5krau2+E8YcHj7N09UviPg5mYhf/rELG29bIFJdXDOFJazN90+luMOw==
 
 eslint-plugin-testing-library@^6.0.1:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-6.3.2.tgz#391ab33e2372b059c8d2439e7ec99fc433267ce3"
-  integrity sha512-Z+6gPhoxXoypKSX+GC3UNfxQtqE5VhBTymU8WmLqpfWCPZIEu+2UZcNYJbwuuGclWQtt6LzN95yEq79o5u4URA==
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-6.4.0.tgz#1ba8a7422e3e31cc315a73ff17c34908f56f9838"
+  integrity sha512-yeWF+YgCgvNyPNI9UKnG0FjeE2sk93N/3lsKqcmR8dSfeXJwFT5irnWo7NjLf152HkRzfoFjh3LsBUrhvFz4eA==
   dependencies:
-    "@typescript-eslint/utils" "^5.58.0"
+    "@typescript-eslint/utils" "^5.62.0"
 
 eslint-rule-composer@^0.3.0:
   version "0.3.0"
