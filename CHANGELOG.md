@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.10
+
+### Patch Changes
+
+- 1185b40: Update to support i18next v24
+
 ## 0.2.9
 
 ### Patch Changes
