@@ -88,7 +88,7 @@ class ShopifyFormat {
     );
 
     if (needsPluralHandling) {
-      if (!this.i18next.translator.pluralResolver.shouldUseIntlApi()) {
+      if (!Intl) {
         throw new Error(
           'Error: The application was unable to use the Intl API. This may be due to a missing or incomplete polyfill.',
         );
