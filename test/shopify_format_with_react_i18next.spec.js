@@ -23,20 +23,20 @@ describe('shopify format with react-i18next (t)', () => {
           en: {
             translation: {
               string: 'Hello world!',
-              string_with_single_mustache: 'Hello {name}!',
-              string_with_interpolation:
-                'Hello {{casual_name}}! Today is {{date}}.',
-              string_with_repeated_interpolation:
-                'Hello {{casual_name}}! Hello {{casual_name}}!',
-              cardinal_pluralization: {
+              stringWithSingleMustache: 'Hello {name}!',
+              stringWithInterpolation:
+                'Hello {{casualName}}! Today is {{date}}.',
+              stringWithRepeatedInterpolation:
+                'Hello {{casualName}}! Hello {{casualName}}!',
+              cardinalPluralization: {
                 0: 'I have no cars.',
                 one: 'I have {{count}} car.',
                 other: 'I have {{count}} cars.',
               },
-              cardinal_pluralization_with_missing_keys: {
+              cardinalPluralizationWithMissingKeys: {
                 other: 'I have {{count}} cars.',
               },
-              ordinal_pluralization: {
+              ordinalPluralization: {
                 ordinal: {
                   one: 'This is my {{ordinal}}st car',
                   two: 'This is my {{ordinal}}nd car',
@@ -44,12 +44,12 @@ describe('shopify format with react-i18next (t)', () => {
                   other: 'This is my {{ordinal}}th car',
                 },
               },
-              nested_level_1: {
-                nested_level_2: 'Nested content',
+              nestedLevel1: {
+                nestedLevel2: 'Nested content',
               },
-              nested_with_params: {
-                formal_greeting: 'Greetings {name}',
-                informal_greeting: 'Sup {name}',
+              nestedWithParams: {
+                formalGreeting: 'Greetings {{name}}',
+                informalGreeting: 'Sup {{name}}',
               },
             },
           },
@@ -63,18 +63,18 @@ describe('shopify format with react-i18next (t)', () => {
 
     expect(t('string')).toBe('Hello world!');
     expect(
-      t('string_with_interpolation', {
-        casual_name: 'Joe',
+      t('stringWithInterpolation', {
+        casualName: 'Joe',
         date: 'Monday',
       }),
     ).toBe('Hello Joe! Today is Monday.');
     expect(
-      t('string_with_repeated_interpolation', {
-        casual_name: 'Joe',
+      t('stringWithRepeatedInterpolation', {
+        casualName: 'Joe',
       }),
     ).toBe('Hello Joe! Hello Joe!');
     expect(
-      i18next.t('string_with_single_mustache', {
+      i18next.t('stringWithSingleMustache', {
         name: 'Joe',
       }),
     ).toBe('Hello Joe!');
@@ -85,8 +85,8 @@ describe('shopify format with react-i18next (t)', () => {
     const {t} = result.current;
 
     expect(
-      t('string_with_interpolation', {
-        casual_name: 'Joe',
+      t('stringWithInterpolation', {
+        casualName: 'Joe',
         date: 'Monday',
         unnecessary: 'This value is not mentioned by any interpolation',
       }),
@@ -97,8 +97,8 @@ describe('shopify format with react-i18next (t)', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('cardinal_pluralization', {count: 1})).toBe('I have 1 car.');
-    expect(t('cardinal_pluralization', {count: 2})).toBe('I have 2 cars.');
+    expect(t('cardinalPluralization', {count: 1})).toBe('I have 1 car.');
+    expect(t('cardinalPluralization', {count: 2})).toBe('I have 2 cars.');
   });
 
   it('falls back to the `other` key if the proper cardinal pluralization key is missing', () => {
@@ -108,7 +108,7 @@ describe('shopify format with react-i18next (t)', () => {
     expect(
       // A count of 1 in `en` should use the `one` key, but it's missing.
       // It should fall back to the `other` key.
-      t('cardinal_pluralization_with_missing_keys', {count: 1}),
+      t('cardinalPluralizationWithMissingKeys', {count: 1}),
     ).toBe('I have 1 cars.');
   });
 
@@ -116,30 +116,30 @@ describe('shopify format with react-i18next (t)', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('cardinal_pluralization.one', {count: 0})).toBe('I have 0 car.');
+    expect(t('cardinalPluralization.one', {count: 0})).toBe('I have 0 car.');
   });
 
   it('prefers explicit 0 keys in cardinal pluralization lookups', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('cardinal_pluralization', {count: 0})).toBe('I have no cars.');
+    expect(t('cardinalPluralization', {count: 0})).toBe('I have no cars.');
   });
 
   it('handles ordinal pluralization lookups (using ordinal: true)', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('ordinal_pluralization', {count: 1, ordinal: true})).toBe(
+    expect(t('ordinalPluralization', {count: 1, ordinal: true})).toBe(
       'This is my 1st car',
     );
-    expect(t('ordinal_pluralization', {count: 2, ordinal: true})).toBe(
+    expect(t('ordinalPluralization', {count: 2, ordinal: true})).toBe(
       'This is my 2nd car',
     );
-    expect(t('ordinal_pluralization', {count: 3, ordinal: true})).toBe(
+    expect(t('ordinalPluralization', {count: 3, ordinal: true})).toBe(
       'This is my 3rd car',
     );
-    expect(t('ordinal_pluralization', {count: 4, ordinal: true})).toBe(
+    expect(t('ordinalPluralization', {count: 4, ordinal: true})).toBe(
       'This is my 4th car',
     );
   });
@@ -148,10 +148,10 @@ describe('shopify format with react-i18next (t)', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('ordinal_pluralization', {ordinal: 1})).toBe('This is my 1st car');
-    expect(t('ordinal_pluralization', {ordinal: 2})).toBe('This is my 2nd car');
-    expect(t('ordinal_pluralization', {ordinal: 3})).toBe('This is my 3rd car');
-    expect(t('ordinal_pluralization', {ordinal: 4})).toBe('This is my 4th car');
+    expect(t('ordinalPluralization', {ordinal: 1})).toBe('This is my 1st car');
+    expect(t('ordinalPluralization', {ordinal: 2})).toBe('This is my 2nd car');
+    expect(t('ordinalPluralization', {ordinal: 3})).toBe('This is my 3rd car');
+    expect(t('ordinalPluralization', {ordinal: 4})).toBe('This is my 4th car');
   });
 
   it('allows explicit lookup of ordinal pluralization subkeys', () => {
@@ -159,13 +159,13 @@ describe('shopify format with react-i18next (t)', () => {
     const {t} = result.current;
 
     expect(
-      t('ordinal_pluralization.ordinal.one', {
+      t('ordinalPluralization.ordinal.one', {
         count: 2,
         ordinal: true,
       }),
     ).toBe('This is my 2st car');
     expect(
-      t('ordinal_pluralization.ordinal.one', {
+      t('ordinalPluralization.ordinal.one', {
         ordinal: 2,
       }),
     ).toBe('This is my 2st car');
@@ -176,12 +176,12 @@ describe('shopify format with react-i18next (t)', () => {
     const {t} = result.current;
 
     expect(
-      t('string_with_single_mustache', {
+      t('stringWithSingleMustache', {
         name: null,
       }),
     ).toBe('Hello !');
     expect(
-      t('string_with_single_mustache', {
+      t('stringWithSingleMustache', {
         name: undefined,
       }),
     ).toBe('Hello !');
@@ -191,8 +191,8 @@ describe('shopify format with react-i18next (t)', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
 
-    expect(t('nested_level_1', {returnObjects: true})).toStrictEqual({
-      nested_level_2: 'Nested content',
+    expect(t('nestedLevel1', {returnObjects: true})).toStrictEqual({
+      nestedLevel2: 'Nested content',
     });
   });
 
@@ -201,10 +201,10 @@ describe('shopify format with react-i18next (t)', () => {
     const {t} = result.current;
 
     expect(
-      t('nested_with_params', {name: 'Joe', returnObjects: true}),
+      t('nestedWithParams', {name: 'Joe', returnObjects: true}),
     ).toStrictEqual({
-      formal_greeting: 'Greetings Joe',
-      informal_greeting: 'Sup Joe',
+      formalGreeting: 'Greetings Joe',
+      informalGreeting: 'Sup Joe',
     });
   });
 
@@ -213,19 +213,17 @@ describe('shopify format with react-i18next (t)', () => {
     const {t} = result.current;
 
     expect(
-      t('string_with_single_mustache', {
+      t('stringWithSingleMustache', {
         name: <strong>{t('string')}</strong>,
       }),
-    ).toStrictEqual(
-      t('string_with_single_mustache', {name: expect.anything()}),
-    );
+    ).toStrictEqual(t('stringWithSingleMustache', {name: expect.anything()}));
   });
 
   it('accepts arrays as interpolated variables', () => {
     const {result} = renderHook(() => useTranslation('translation'));
     const {t} = result.current;
     expect(
-      t('string_with_single_mustache', {
+      t('stringWithSingleMustache', {
         name: ['Joe', 'Jane'],
       }),
     ).toStrictEqual(['Hello ', 'Joe', 'Jane', '!']);
@@ -243,20 +241,20 @@ describe('with react-i18next (Trans)', () => {
           en: {
             translation: {
               string: 'Hello world!',
-              string_with_single_mustache: 'Hello {name}!',
-              string_with_interpolation:
-                'Hello {{casual_name}}! Today is {{date}}.',
-              string_with_repeated_interpolation:
-                'Hello {{casual_name}}! Hello {{casual_name}}!',
-              cardinal_pluralization: {
+              stringWithSingleMustache: 'Hello {name}!',
+              stringWithInterpolation:
+                'Hello {{casualName}}! Today is {{date}}.',
+              stringWithRepeatedInterpolation:
+                'Hello {{casualName}}! Hello {{casualName}}!',
+              cardinalPluralization: {
                 0: 'I have no cars.',
                 one: 'I have {{count}} car.',
                 other: 'I have {{count}} cars.',
               },
-              cardinal_pluralization_with_missing_keys: {
+              cardinalPluralizationWithMissingKeys: {
                 other: 'I have {{count}} cars.',
               },
-              ordinal_pluralization: {
+              ordinalPluralization: {
                 ordinal: {
                   one: 'This is my {{ordinal}}st car',
                   two: 'This is my {{ordinal}}nd car',
@@ -275,14 +273,14 @@ describe('with react-i18next (Trans)', () => {
       <>
         <Trans i18nKey="string" />
         <Trans
-          i18nKey="string_with_interpolation"
-          values={{casual_name: 'Joe', date: 'Monday'}}
+          i18nKey="stringWithInterpolation"
+          values={{casualName: 'Joe', date: 'Monday'}}
         />
         <Trans
-          i18nKey="string_with_repeated_interpolation"
-          values={{casual_name: 'Joe'}}
+          i18nKey="stringWithRepeatedInterpolation"
+          values={{casualName: 'Joe'}}
         />
-        <Trans i18nKey="string_with_single_mustache" values={{name: 'Joe'}} />
+        <Trans i18nKey="stringWithSingleMustache" values={{name: 'Joe'}} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -298,9 +296,9 @@ describe('with react-i18next (Trans)', () => {
     const TestComponent = () => (
       <>
         <Trans
-          i18nKey="string_with_interpolation"
+          i18nKey="stringWithInterpolation"
           values={{
-            casual_name: 'Joe',
+            casualName: 'Joe',
             date: 'Monday',
             unnecessary: 'This value is not mentioned by any interpolation',
           }}
@@ -317,8 +315,8 @@ describe('with react-i18next (Trans)', () => {
   it('handles cardinal pluralization lookups', () => {
     const TestComponent = () => (
       <>
-        <Trans i18nKey="cardinal_pluralization" count={1} />
-        <Trans i18nKey="cardinal_pluralization" count={2} />
+        <Trans i18nKey="cardinalPluralization" count={1} />
+        <Trans i18nKey="cardinalPluralization" count={2} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -329,7 +327,7 @@ describe('with react-i18next (Trans)', () => {
   it('falls back to the `other` key if the proper cardinal pluralization key is missing', () => {
     const TestComponent = () => (
       <>
-        <Trans i18nKey="cardinal_pluralization_with_missing_keys" count={1} />
+        <Trans i18nKey="cardinalPluralizationWithMissingKeys" count={1} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -340,7 +338,7 @@ describe('with react-i18next (Trans)', () => {
   it('allows explicit lookup of cardinal pluralization subkeys', () => {
     const TestComponent = () => (
       <>
-        <Trans i18nKey="cardinal_pluralization.one" count={0} />
+        <Trans i18nKey="cardinalPluralization.one" count={0} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -350,7 +348,7 @@ describe('with react-i18next (Trans)', () => {
   it('prefers explicit 0 keys in cardinal pluralization lookups', () => {
     const TestComponent = () => (
       <>
-        <Trans i18nKey="cardinal_pluralization" count={0} />
+        <Trans i18nKey="cardinalPluralization" count={0} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -361,19 +359,19 @@ describe('with react-i18next (Trans)', () => {
     const TestComponent = () => (
       <>
         <Trans
-          i18nKey="ordinal_pluralization"
+          i18nKey="ordinalPluralization"
           values={{count: 1, ordinal: true}}
         />
         <Trans
-          i18nKey="ordinal_pluralization"
+          i18nKey="ordinalPluralization"
           values={{count: 2, ordinal: true}}
         />
         <Trans
-          i18nKey="ordinal_pluralization"
+          i18nKey="ordinalPluralization"
           values={{count: 3, ordinal: true}}
         />
         <Trans
-          i18nKey="ordinal_pluralization"
+          i18nKey="ordinalPluralization"
           values={{count: 4, ordinal: true}}
         />
       </>
@@ -388,10 +386,10 @@ describe('with react-i18next (Trans)', () => {
   it('handles ordinal pluralization lookups (using ordinal: <number>)', () => {
     const TestComponent = () => (
       <>
-        <Trans i18nKey="ordinal_pluralization" values={{ordinal: 1}} />
-        <Trans i18nKey="ordinal_pluralization" values={{ordinal: 2}} />
-        <Trans i18nKey="ordinal_pluralization" values={{ordinal: 3}} />
-        <Trans i18nKey="ordinal_pluralization" values={{ordinal: 4}} />
+        <Trans i18nKey="ordinalPluralization" values={{ordinal: 1}} />
+        <Trans i18nKey="ordinalPluralization" values={{ordinal: 2}} />
+        <Trans i18nKey="ordinalPluralization" values={{ordinal: 3}} />
+        <Trans i18nKey="ordinalPluralization" values={{ordinal: 4}} />
       </>
     );
     const {container} = render(<TestComponent />);
@@ -405,12 +403,12 @@ describe('with react-i18next (Trans)', () => {
     const TestComponent = () => (
       <>
         <Trans
-          i18nKey="ordinal_pluralization.ordinal.one"
+          i18nKey="ordinalPluralization.ordinal.one"
           count={2}
           values={{ordinal: true}}
         />
         <Trans
-          i18nKey="ordinal_pluralization.ordinal.one"
+          i18nKey="ordinalPluralization.ordinal.one"
           values={{ordinal: 2}}
         />
       </>
