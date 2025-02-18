@@ -139,21 +139,21 @@ describe('shopify format', () => {
           en: {
             translation: {
               string: 'Hello world!',
-              string_with_single_mustache: 'Hello {name}!',
-              string_with_interpolation:
-                'Hello {{casual_name}}! Today is {{date}}.',
-              string_with_repeated_interpolation:
-                'Hello {{casual_name}}! Hello {{casual_name}}!',
-              non_plural_count: 'The count is {count}.',
-              cardinal_pluralization: {
+              stringWithSingleMustache: 'Hello {name}!',
+              stringWithInterpolation:
+                'Hello {{casualName}}! Today is {{date}}.',
+              stringWithRepeatedInterpolation:
+                'Hello {{casualName}}! Hello {{casualName}}!',
+              nonPluralCount: 'The count is {count}.',
+              cardinalPluralization: {
                 0: 'I have no cars.',
                 one: 'I have {{count}} car.',
                 other: 'I have {{count}} cars.',
               },
-              cardinal_pluralization_with_missing_keys: {
+              cardinalPluralizationWithMissingKeys: {
                 other: 'I have {{count}} cars.',
               },
-              ordinal_pluralization: {
+              ordinalPluralization: {
                 ordinal: {
                   one: 'This is my {{ordinal}}st car',
                   two: 'This is my {{ordinal}}nd car',
@@ -170,18 +170,18 @@ describe('shopify format', () => {
     it('handles basic lookups', () => {
       expect(i18next.t('string')).toBe('Hello world!');
       expect(
-        i18next.t('string_with_interpolation', {
-          casual_name: 'Joe',
+        i18next.t('stringWithInterpolation', {
+          casualName: 'Joe',
           date: 'Monday',
         }),
       ).toBe('Hello Joe! Today is Monday.');
       expect(
-        i18next.t('string_with_repeated_interpolation', {
-          casual_name: 'Joe',
+        i18next.t('stringWithRepeatedInterpolation', {
+          casualName: 'Joe',
         }),
       ).toBe('Hello Joe! Hello Joe!');
       expect(
-        i18next.t('string_with_single_mustache', {
+        i18next.t('stringWithSingleMustache', {
           name: 'Joe',
         }),
       ).toBe('Hello Joe!');
@@ -189,8 +189,8 @@ describe('shopify format', () => {
 
     it('does not fail when given excess values', () => {
       expect(
-        i18next.t('string_with_interpolation', {
-          casual_name: 'Joe',
+        i18next.t('stringWithInterpolation', {
+          casualName: 'Joe',
           date: 'Monday',
           unnecessary: 'This value is not mentioned by any interpolation',
         }),
@@ -198,22 +198,22 @@ describe('shopify format', () => {
     });
 
     it('handles cardinal pluralization lookups', () => {
-      expect(i18next.t('cardinal_pluralization', {count: 1})).toBe(
+      expect(i18next.t('cardinalPluralization', {count: 1})).toBe(
         'I have 1 car.',
       );
-      expect(i18next.t('cardinal_pluralization', {count: 2})).toBe(
+      expect(i18next.t('cardinalPluralization', {count: 2})).toBe(
         'I have 2 cars.',
       );
     });
 
     it('formats cardinal pluralization according to locale format', () => {
-      expect(i18next.t('cardinal_pluralization', {count: 5000})).toBe(
+      expect(i18next.t('cardinalPluralization', {count: 5000})).toBe(
         'I have 5,000 cars.',
       );
     });
 
     it('does not format count as plural if passed as string', () => {
-      expect(i18next.t('non_plural_count', {count: '5_000'})).toBe(
+      expect(i18next.t('nonPluralCount', {count: '5_000'})).toBe(
         'The count is 5_000.',
       );
     });
@@ -222,67 +222,67 @@ describe('shopify format', () => {
       expect(
         // A count of 1 in `en` should use the `one` key, but it's missing.
         // It should fall back to the `other` key.
-        i18next.t('cardinal_pluralization_with_missing_keys', {count: 1}),
+        i18next.t('cardinalPluralizationWithMissingKeys', {count: 1}),
       ).toBe('I have 1 cars.');
     });
 
     it('allows explicit lookup of cardinal pluralization subkeys', () => {
-      expect(i18next.t('cardinal_pluralization.one', {count: 0})).toBe(
+      expect(i18next.t('cardinalPluralization.one', {count: 0})).toBe(
         'I have 0 car.',
       );
     });
 
     it('prefers explicit 0 keys in cardinal pluralization lookups', () => {
-      expect(i18next.t('cardinal_pluralization', {count: 0})).toBe(
+      expect(i18next.t('cardinalPluralization', {count: 0})).toBe(
         'I have no cars.',
       );
     });
 
     it('handles ordinal pluralization lookups (using ordinal: true)', () => {
-      expect(
-        i18next.t('ordinal_pluralization', {count: 1, ordinal: true}),
-      ).toBe('This is my 1st car');
-      expect(
-        i18next.t('ordinal_pluralization', {count: 2, ordinal: true}),
-      ).toBe('This is my 2nd car');
-      expect(
-        i18next.t('ordinal_pluralization', {count: 3, ordinal: true}),
-      ).toBe('This is my 3rd car');
-      expect(
-        i18next.t('ordinal_pluralization', {count: 4, ordinal: true}),
-      ).toBe('This is my 4th car');
+      expect(i18next.t('ordinalPluralization', {count: 1, ordinal: true})).toBe(
+        'This is my 1st car',
+      );
+      expect(i18next.t('ordinalPluralization', {count: 2, ordinal: true})).toBe(
+        'This is my 2nd car',
+      );
+      expect(i18next.t('ordinalPluralization', {count: 3, ordinal: true})).toBe(
+        'This is my 3rd car',
+      );
+      expect(i18next.t('ordinalPluralization', {count: 4, ordinal: true})).toBe(
+        'This is my 4th car',
+      );
     });
 
     it('formats ordinal pluralization according to locale format', () => {
       expect(
-        i18next.t('ordinal_pluralization', {count: 5000, ordinal: true}),
+        i18next.t('ordinalPluralization', {count: 5000, ordinal: true}),
       ).toBe('This is my 5,000th car');
     });
 
     it('handles ordinal pluralization lookups (using ordinal: <number>)', () => {
-      expect(i18next.t('ordinal_pluralization', {ordinal: 1})).toBe(
+      expect(i18next.t('ordinalPluralization', {ordinal: 1})).toBe(
         'This is my 1st car',
       );
-      expect(i18next.t('ordinal_pluralization', {ordinal: 2})).toBe(
+      expect(i18next.t('ordinalPluralization', {ordinal: 2})).toBe(
         'This is my 2nd car',
       );
-      expect(i18next.t('ordinal_pluralization', {ordinal: 3})).toBe(
+      expect(i18next.t('ordinalPluralization', {ordinal: 3})).toBe(
         'This is my 3rd car',
       );
-      expect(i18next.t('ordinal_pluralization', {ordinal: 4})).toBe(
+      expect(i18next.t('ordinalPluralization', {ordinal: 4})).toBe(
         'This is my 4th car',
       );
     });
 
     it('allows explicit lookup of ordinal pluralization subkeys', () => {
       expect(
-        i18next.t('ordinal_pluralization.ordinal.one', {
+        i18next.t('ordinalPluralization.ordinal.one', {
           count: 2,
           ordinal: true,
         }),
       ).toBe('This is my 2st car');
       expect(
-        i18next.t('ordinal_pluralization.ordinal.one', {
+        i18next.t('ordinalPluralization.ordinal.one', {
           ordinal: 2,
         }),
       ).toBe('This is my 2st car');
