@@ -1659,9 +1659,9 @@
     typescript-eslint "^8.18.0"
 
 "@shopify/prettier-config@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@shopify/prettier-config/-/prettier-config-1.1.2.tgz#612f87c0cd1196e8b43c85425e587d0fa7f1172d"
-  integrity sha512-5ugCL9sPGzmOaZjeRGaWUWhHgAbemrS6z+R7v6gwiD+BiqSeoFhIY+imLpfdFCVpuOGalpHeCv6o3gv++EHs0A==
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@shopify/prettier-config/-/prettier-config-1.1.4.tgz#d1661e5f2e5ccf5988a29e6a8d62d7ce98726be5"
+  integrity sha512-BmM8zRVvtu2eKyZ7HmKqG6lI/U6uiZgs/UK4qLnVmdmx8r5hSL9alMRguuV8MXgDUdt17nWoZKvvUVXF2OAoqA==
 
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
