@@ -30,7 +30,7 @@
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.26.1",
     "@changesets/get-release-plan": "^4.0.0",
-    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-babel": "^7.0.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@shopify/eslint-plugin": "^48.0.2",
     "@shopify/prettier-config": "^1.1.2",
