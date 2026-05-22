@@ -1042,12 +1042,12 @@
   dependencies:
     "@changesets/types" "^6.1.0"
 
-"@changesets/changelog-github@^0.5.0":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@changesets/changelog-github/-/changelog-github-0.5.2.tgz#6225ffcea0698af3ef7403780c8bbc2e93ffa5a0"
-  integrity sha512-HeGeDl8HaIGj9fQHo/tv5XKQ2SNEi9+9yl1Bss1jttPqeiASRXhfi0A2wv8yFKCp07kR1gpOI5ge6+CWNm1jPw==
+"@changesets/changelog-github@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@changesets/changelog-github/-/changelog-github-0.7.0.tgz#c359fe8cbb711a2247873c3623e7e47654a5ef16"
+  integrity sha512-rBsbRvc4TVn+FvFnOVM3LxlFJfTXXCp8gfVJ+0BubxWNSVnLuAzowi5j+IEraLLP52w8AAs9QfKbPS3MMiXQJA==
   dependencies:
-    "@changesets/get-github-info" "^0.7.0"
+    "@changesets/get-github-info" "^0.8.0"
     "@changesets/types" "^6.1.0"
     dotenv "^8.1.0"
 
@@ -1126,10 +1126,10 @@
     picocolors "^1.1.0"
     semver "^7.5.3"
 
-"@changesets/get-github-info@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@changesets/get-github-info/-/get-github-info-0.7.0.tgz#d0a55e894343ee719a01901151dba86dfebb2bef"
-  integrity sha512-+i67Bmhfj9V4KfDeS1+Tz3iF32btKZB2AAx+cYMqDSRFP7r3/ZdGbjCo+c6qkyViN9ygDuBjzageuPGJtKGe5A==
+"@changesets/get-github-info@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@changesets/get-github-info/-/get-github-info-0.8.0.tgz#6921dcf3735239b9fbc413e5a111d81f9a65f66f"
+  integrity sha512-cRnC+xdF0JIik7coko3iUP9qbnfi1iJQ3sAa6dE+Tx3+ET8bjFEm63PA4WEohgjYcmsOikPHWzPsMWWiZmntOQ==
   dependencies:
     dataloader "^1.4.0"
     node-fetch "^2.5.0"
