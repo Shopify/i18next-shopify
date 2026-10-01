@@ -1,5 +1,11 @@
 # Changelogg
 
+## 0.2.12
+
+### Patch Changes
+
+- a54efd2: Publish releases using npm trusted publishing instead of a stored npm token.
+
 ## 0.2.11
 
 ### Patch Changes
