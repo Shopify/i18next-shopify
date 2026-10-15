@@ -14,6 +14,7 @@ Key features include:
 ## Table of contents
 [Getting Started](#getting-started)\
 [Example](#example)\
+[Using plain i18next instead](#using-plain-i18next-instead)\
 [License](#license)\
 [Contributing](#contributing)\
 [References](#references)
@@ -69,6 +70,191 @@ i18next.use(ShopifyFormat).init({
 i18next.t("hello", { casualName: "Shopify" }); // -> Hello Shopify!
 i18next.t("products", { count: 2 }); // -> I have 2 products!
 ```
+
+## Using plain i18next instead
+
+Most of what this plugin does can be reproduced with `i18next` configuration alone, and the rest with a small `postProcessor` that you can copy into your app. You may prefer that over this plugin because this plugin replaces i18next's interpolator entirely, so i18next features such as `$t()` nesting and `{{- raw}}` are unavailable while it is installed.
+
+### Configuration only
+
+If you never pass React elements to `t()`, this is the complete setup:
+
+```js
+import i18next from "i18next";
+
+i18next.init({
+  // Nested plural keys: `{ "products": { "one": "...", "other": "..." } }`.
+  // Also gives `{ "ordinal": { "one": "..." } }` for `t("key", { count: 1, ordinal: true })`.
+  pluralSeparator: ".",
+  interpolation: {
+    // Safe only because React escapes the output. Keep escaping on when rendering raw HTML.
+    escapeValue: false,
+    // Accept both `{{name}}` and `{name}`. The empty `prefix` and `suffix` are required,
+    // otherwise i18next's defaults (`{{` and `}}`) take precedence over the escaped variants.
+    prefix: "",
+    suffix: "",
+    prefixEscaped: "{{?",
+    suffixEscaped: "}}?",
+    // Route every variable through `format` so `count` and `ordinal` can be handled below.
+    alwaysFormat: true,
+    format(value, _format, lng, { interpolationkey, count }) {
+      // `{{count}}` and `{{ordinal}}` both render the locale formatted count, e.g. "1,234,567".
+      const number = interpolationkey === "ordinal" ? count : value;
+      if (
+        (interpolationkey === "count" || interpolationkey === "ordinal") &&
+        typeof number === "number"
+      ) {
+        return new Intl.NumberFormat(lng).format(number);
+      }
+      return value;
+    },
+  },
+});
+```
+
+With this configuration, `t()` behaves like this plugin for `{{name}}` and `{name}` interpolation, nested cardinal and ordinal plural keys, locale formatted counts, `returnObjects: true` and the `Trans` component.
+
+The following plugin behaviours have no equivalent and need to change in your app:
+
+* `t("key", { ordinal: 3 })` must become `t("key", { count: 3, ordinal: true })`.
+* Explicit `"0"` plural keys must be renamed to `"zero"`, the CLDR category i18next looks up when `count` is `0`. Explicit `"1"` keys have no equivalent.
+* When a translation is missing the plural form for the current count, i18next does not fall back to `other`. Make sure every plural form is present.
+* Supplying `interpolation.format` replaces i18next's built-in formatters, so `{{value, currency}}` style formats are unavailable with this setup, as they are with this plugin.
+* `escapeValue: false` is only safe when the output is rendered through React or otherwise escaped. Keep escaping on for strings that end up in raw HTML, emails or `dangerouslySetInnerHTML`.
+
+### React elements as replacement values
+
+i18next's interpolator always produces a string, so with configuration alone a React element passed to `t()` renders as `[object Object]`. The module below restores this plugin's behaviour, where `t()` returns an array of strings and elements when a replacement value is an element or an array. `format` swaps such values for a marker and the `reactValues` postProcessor swaps them back after interpolation.
+
+This is the same code that [`test/plain_i18next_config.spec.js`](test/plain_i18next_config.spec.js) runs against the same scenarios as this plugin:
+
+```jsx
+import React from "react";
+
+// NUL cannot survive the usual translation pipelines and never appears in rendered
+// text, so it marks where `format` stashed a non-string value. String values that
+// contain it are stripped so they cannot forge a marker.
+const TOKEN = '\u0000';
+
+const numberFormats = new Map();
+
+function formatNumber(value, lng) {
+  if (!numberFormats.has(lng)) {
+    numberFormats.set(lng, new Intl.NumberFormat(lng));
+  }
+  return numberFormats.get(lng).format(value);
+}
+
+function isElementValue(value) {
+  return React.isValidElement(value) || Array.isArray(value);
+}
+
+function interpolationValues(options) {
+  return options.replace ?? options;
+}
+
+function restoreElements(str, options) {
+  if (typeof str !== 'string' || !str.includes(TOKEN)) return str;
+
+  const values = interpolationValues(options);
+  const occurrences = new Map();
+
+  return str.split(TOKEN).flatMap((part, index) => {
+    if (index % 2 === 0) return part === '' ? [] : [part];
+
+    const isTokenisedValue =
+      Object.prototype.hasOwnProperty.call(values, part) &&
+      isElementValue(values[part]);
+    if (!isTokenisedValue) return [`${TOKEN}${part}${TOKEN}`];
+
+    const occurrence = occurrences.get(part) ?? 0;
+    occurrences.set(part, occurrence + 1);
+
+    let position = 0;
+    return [values[part]].flat().map((item) => {
+      const key = `${part}-${occurrence}-${position}`;
+      position += 1;
+      return React.isValidElement(item) && !item.key
+        ? React.cloneElement(item, {key})
+        : item;
+    });
+  });
+}
+
+function restoreElementsDeep(value, options) {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [
+        key,
+        restoreElementsDeep(entry, options),
+      ]),
+    );
+  }
+  return restoreElements(value, options);
+}
+
+const reactValues = {
+  type: 'postProcessor',
+  name: 'reactValues',
+  process(value, _key, options) {
+    return restoreElementsDeep(value, options);
+  },
+};
+
+function format(value, _format, lng, {interpolationkey, count}) {
+  // `{{count}}` and `{{ordinal}}` both render the locale formatted count, e.g. "1,234,567".
+  const number = interpolationkey === 'ordinal' ? count : value;
+  if (
+    (interpolationkey === 'count' || interpolationkey === 'ordinal') &&
+    typeof number === 'number'
+  ) {
+    return formatNumber(number, lng);
+  }
+  if (isElementValue(value)) return `${TOKEN}${interpolationkey}${TOKEN}`;
+  if (typeof value === 'string') return value.split(TOKEN).join('');
+  return value;
+}
+
+const options = {
+  // Nested plural keys: `{"products": {"one": "...", "other": "..."}}` and
+  // `{"ordinal": {"one": "..."}}` for `t("key", {count: 1, ordinal: true})`.
+  pluralSeparator: '.',
+  postProcess: ['reactValues'],
+  interpolation: {
+    // Safe only because React escapes the output. Keep escaping on when rendering raw HTML.
+    escapeValue: false,
+    // Accept both `{{name}}` and `{name}`. The empty `prefix` and `suffix` are required,
+    // otherwise i18next's defaults (`{{` and `}}`) take precedence over the escaped variants.
+    prefix: '',
+    suffix: '',
+    prefixEscaped: '{{?',
+    suffixEscaped: '}}?',
+    // Route every variable through `format`, including React elements.
+    alwaysFormat: true,
+    format,
+  },
+};
+```
+
+Register it alongside your other options:
+
+```jsx
+import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
+
+i18next
+  .use(initReactI18next)
+  .use(reactValues)
+  .init({ ...options, lng: "en", resources });
+
+i18next.t("hello", { casualName: <strong>Shopify</strong> });
+// -> ["Hello ", <strong key="casualName-0-0">Shopify</strong>, "!"]
+```
+
+Known limitations, shared with this plugin unless noted:
+
+* Only top level variables are restored. `{{user.name}}` style keys render the marker text literally.
+* `Trans` calls `t()` too, so an array in its `values` now reaches it as an array instead of the joined string plain i18next would produce. Join such values before passing them to `Trans`.
 
 ## License
 
